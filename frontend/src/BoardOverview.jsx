@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import Board from "./Board.jsx";
 import {useQuery} from "react-query";
-import customToDoFetch from "./utils.js";
-import {toDos} from "./data.js";
+import customToDoFetch from "./customFetches.js";
+import {toDos} from "./types.js";
 import {useSortData} from "./hooks.js";
 
 function BoardOverview() {
