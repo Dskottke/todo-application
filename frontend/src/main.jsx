@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import {QueryClient, QueryClientProvider} from "react-query";
+import AppContext from "./Context.jsx";
 
 const client = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <QueryClientProvider client={client}>
-            <App/>
+            <AppContext>
+                <App/>
+            </AppContext>
         </QueryClientProvider>
-    </React.StrictMode>,
+    </React.StrictMode>
 )
