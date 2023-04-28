@@ -81,6 +81,7 @@ h4 {
 
 /* ----Navbar---- */
 .nav-container {
+    position: absolute;
     display: flex;
     background-color: var(--grey);
     width: 100%;
@@ -103,5 +104,44 @@ h4 {
 
 .nav-header span {
     color: var(--primary-100)
+}
+
+/* ----Hero---- */
+.hero-container {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: var(--grey-200);
+    height: 400px;
+    text-align: center;
+    letter-spacing: var(--letterSpacing);
+    text-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;;
+}
+
+.hero-container h1 {
+    font-size: 50px;
+    margin-top: 5rem;
+    font-variant-caps: all-petite-caps;
+}
+
+.hero-container p {
+    letter-spacing: var(--letterSpacing);
+    opacity: 70%;
+}
+
+@media screen and (max-width: 480px) {
+    .hero-container h1 {
+        font-size: 30px;
+        letter-spacing: 0;
+    }
+
+    .hero-container p {
+        letter-spacing: 0.05rem;
+    }
+
+    .hero-container {
+        height: 300px;
+    }
 }
 
