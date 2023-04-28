@@ -1,6 +1,7 @@
 import React from 'react';
 import {useGlobalContext} from "./Context.jsx";
 import {HiOutlineXMark} from 'react-icons/hi2'
+import AddForm from "./AddForm.jsx";
 
 function AddModal() {
 
@@ -15,6 +16,7 @@ function AddModal() {
                     onClick={closeModal}
                 />
                 </button>
+                <AddForm/>
             </div>
 
         </div>
