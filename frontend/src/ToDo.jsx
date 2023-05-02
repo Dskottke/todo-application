@@ -11,7 +11,16 @@ function ToDo({id, title, description, status}) {
             queryClient.invalidateQueries({queryKey: ['todos']})
         }
     })
-    console.log(status)
+    const {mutate: deleteToDo} = useMutation({
+        mutationFn: (id) => customToDoFetch.delete(`/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['todos']})
+        }
+    })
+
+    const onDeleteClick = () => {
+        deleteToDo(id)
+    }
     const onAdvanceClick = () => {
         advanceToDo(id)
     }
@@ -25,8 +34,9 @@ function ToDo({id, title, description, status}) {
                 <p>{description}</p>
             </div>
             <div className={"todo-action"}>
-                {status !== "DONE" ?<button onClick={onAdvanceClick} className={"todo-btn"} type={"button"}>advance</button> : null}
-                <button className={"todo-btn"} type={"button"}>delete</button>
+                {status !== "DONE" ?
+                    <button onClick={onAdvanceClick} className={"todo-btn"} type={"button"}>advance</button> : null}
+                <button onClick={onDeleteClick} className={"todo-btn"} type={"button"}>delete</button>
             </div>
         </article>
     );

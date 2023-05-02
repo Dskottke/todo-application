@@ -31,4 +31,10 @@ public class ToDoController {
     public ToDo updateToDo(@PathVariable String id) {
         return toDoService.updateStatusById(id);
     }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteToDo(@PathVariable String id) {
+        toDoService.deleteToDoById(id);
+    }
 }

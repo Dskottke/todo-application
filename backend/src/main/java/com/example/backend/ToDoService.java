@@ -56,4 +56,11 @@ public class ToDoService {
         }
         throw new IllegalStateException("invalid status");
     }
+
+    public void deleteToDoById(String id) {
+        if (!toDoRepository.existsById(id)) {
+            throw new ToDoNotFoundException(id);
+        }
+        toDoRepository.deleteById(id);
+    }
 }
