@@ -4,6 +4,7 @@ import App from './App'
 import './index.css'
 import {QueryClient, QueryClientProvider} from "react-query";
 import AppContext from "./Context.jsx";
+import 'react-toastify/dist/ReactToastify.css'
 
 const client = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')).render(
