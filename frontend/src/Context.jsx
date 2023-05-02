@@ -5,7 +5,7 @@ export const useGlobalContext = () => useContext(GlobalContext)
 
 const AppContext = ({children}) => {
 
-    const [isModalOpen, setIsModalOpen] = useState(true)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const openModal = () => {
         setIsModalOpen(true)

@@ -4,6 +4,7 @@ import Hero from "./Hero.jsx";
 import BoardOverview from "./BoardOverview.jsx";
 import AddModal from "./AddModal.jsx";
 import {useGlobalContext} from "./Context.jsx";
+import {ToastContainer} from "react-toastify";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
             {isModalOpen && <AddModal/> }
             <Hero/>
             <BoardOverview/>
+            <ToastContainer/>
         </div>
     )
 }

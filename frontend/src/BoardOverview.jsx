@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import Board from "./Board.jsx";
 import {useQuery} from "react-query";
 import customToDoFetch from "./customFetches.js";
@@ -6,9 +6,9 @@ import {useSortData} from "./hooks.js";
 
 function BoardOverview() {
 
-    const {isSuccess,isLoading, data} = useQuery({
+    const {isSuccess, isLoading, data, error} = useQuery({
         queryKey: ['todos'],
-        queryFn: () => customToDoFetch.get('')
+        queryFn: () => customToDoFetch.get("")
     })
 
     if (isLoading) {
@@ -18,7 +18,15 @@ function BoardOverview() {
             </div>
         )
     }
-    if(isSuccess) {
+    console.log(error)
+    if (error) {
+        return (
+            <div>
+                <p>{error.message}</p>
+            </div>
+        )
+    }
+    if (isSuccess) {
         const {openList, inProgressList, closed} = useSortData(data.data)
 
 
