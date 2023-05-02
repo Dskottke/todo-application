@@ -26,4 +26,9 @@ public class ToDoController {
     public ToDo addToDo(@Validated @RequestBody NewToDo newToDo) {
         return toDoService.addToDo(newToDo);
     }
+
+    @PutMapping("{id}")
+    public ToDo updateToDo(@PathVariable String id) {
+        return toDoService.updateStatusById(id);
+    }
 }
