@@ -12,10 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class ToDoServiceTest {
 
@@ -60,13 +58,12 @@ class ToDoServiceTest {
         //WHEN
 
         //THEN
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> toDoService.addToDo(testDTO));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> toDoService.addToDo(testDTO));
         assertEquals("all fields must be filled", exception.getMessage());
     }
 
     @Test
-    @DisplayName("updateStatusById with valid id and expect the updated ToDo with status IN_PROGRESS as a return")
+    @DisplayName("UpdateStatusById with valid id and expect the updated ToDo with status IN_PROGRESS as a return")
     void updateStatusByIdShouldReturnUpdatedToDoWithStatusInProgress() {
         //GIVEN
         String id = "testId";
@@ -83,7 +80,7 @@ class ToDoServiceTest {
     }
 
     @Test
-    @DisplayName("updateStatusById with valid id and expect the updated ToDo with status DONE as a return")
+    @DisplayName("UpdateStatusById with valid id and expect the updated ToDo with status DONE as a return")
     void updateStatusByIdShouldReturnUpdatedToDoWithStatusDone() {
         //GIVEN
         String id = "testId";
@@ -100,7 +97,7 @@ class ToDoServiceTest {
     }
 
     @Test
-    @DisplayName("updateStatusById with valid id but invalid status should throw IllegalStateException")
+    @DisplayName("UpdateStatusById with valid id but invalid status should throw IllegalStateException")
     void updateStatusByIdWithInvalidStatusDoneShouldThrowException() {
         //GIVEN
         String id = "testId";
@@ -114,7 +111,7 @@ class ToDoServiceTest {
     }
 
     @Test
-    @DisplayName("updateStatusById with invalid id should throw a ToDoNotFoundException")
+    @DisplayName("UpdateStatusById with invalid id should throw a ToDoNotFoundException")
     void updateStatusByIdShouldThrowToDoNotFoundException() {
         //GIVEN
         String id = "testId";
@@ -122,6 +119,37 @@ class ToDoServiceTest {
 
         //THEN
         ToDoNotFoundException exception = assertThrows(ToDoNotFoundException.class, () -> toDoService.updateStatusById(id));
+        assertEquals("Could not find todo testId", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("DeleteById : List of ToDos should be smaller after deleting a ToDo")
+    void deleteByIdAndListShouldBeSmallerAfterDeletingAToDo() {
+        //GIVEN
+        String id = "testId";
+        when(toDoRepository.findAll()).thenReturn(List.of(new ToDo("testId", "testDescription", "testTitle", Status.OPEN)));
+        int sizeBefore = toDoService.getAllToDos().size();
+        //WHEN
+        when(toDoRepository.existsById(id)).thenReturn(true);
+        doNothing().when(toDoRepository).deleteById(id);
+        when(toDoRepository.findAll()).thenReturn(Collections.emptyList());
+        toDoService.deleteToDoById(id);
+        int sizeAfter = toDoService.getAllToDos().size();
+        //THEN
+        verify(toDoRepository).existsById(id);
+        verify(toDoRepository, times(2)).findAll();
+        verify(toDoRepository).deleteById(id);
+        assertTrue(sizeBefore > sizeAfter);
+    }
+
+    @Test
+    @DisplayName("DeleteById : should throw a ToDoNotFoundException")
+    void deleteByIdShouldThrowAToDoNotFoundException() {
+        //GIVEN
+        String id = "testId";
+        //WHEN
+        //THEN
+        ToDoNotFoundException exception = assertThrows(ToDoNotFoundException.class, () -> toDoService.deleteToDoById(id));
         assertEquals("Could not find todo testId", exception.getMessage());
     }
 }

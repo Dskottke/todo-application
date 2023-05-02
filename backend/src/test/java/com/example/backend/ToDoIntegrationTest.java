@@ -166,5 +166,36 @@ class ToDoIntegrationTest {
 
 
     }
+
+    @Test
+    @DisplayName("DELETE - Request , with valid id, expect HTTP-status 200")
+    @DirtiesContext
+    void deleteWithValidIdExpectHttpStatus200() throws Exception {
+
+        String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/todos")
+                        .contentType("application/json")
+                        .content("""
+                                {
+                                    "description": "test",
+                                    "title": "test"
+                                }
+                                """))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        ToDo toDo = objectMapper.readValue(result, ToDo.class);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/todos/" + toDo.id()))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("DELETE - Request , with invalid id, expect HTTP-status 404")
+    void deleteWithInvalidIdExpectHttpStatus404() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/todos/" + "123"))
+                .andExpect(status().is(404))
+                .andExpect(content().string("Could not find todo 123"));
+    }
 }
 
