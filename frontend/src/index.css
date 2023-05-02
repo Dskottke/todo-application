@@ -141,25 +141,31 @@ h4 {
     margin-right: 2rem;
     gap: 3rem;
 }
-.nav-status-area{
+
+.nav-status-area {
     color: var(--grey-800);
 }
+
 .nav-status-area svg {
     font-size: 20px;
 }
+
 .nav-status-counter {
     position: relative;
     font-size: 25px;
     color: var(--primary-300);
 }
+
 @media screen and (max-width: 480px) {
     .nav-status-area {
         display: grid;
         gap: normal;
     }
+
     .nav-status-area svg {
         font-size: 15px;
     }
+
     .nav-status-counter {
         color: var(--primary-300);
         font-size: 15px;
@@ -228,7 +234,7 @@ h4 {
 /* ---BoardOverview--- */
 .board-container {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 @media screen and (max-width: 680px) {

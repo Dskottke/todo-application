@@ -1,5 +1,6 @@
 package com.example.backend;
 
+import com.example.backend.exception.ToDoNotFoundException;
 import com.example.backend.model.NewToDo;
 import com.example.backend.model.Status;
 import com.example.backend.model.ToDo;
@@ -9,6 +10,7 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -59,9 +61,67 @@ class ToDoServiceTest {
 
         //THEN
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> {
-                    toDoService.addToDo(testDTO);
-                });
+                () -> toDoService.addToDo(testDTO));
         assertEquals("all fields must be filled", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("updateStatusById with valid id and expect the updated ToDo with status IN_PROGRESS as a return")
+    void updateStatusByIdShouldReturnUpdatedToDoWithStatusInProgress() {
+        //GIVEN
+        String id = "testId";
+        //WHEN
+        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.OPEN);
+        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.IN_PROGRESS);
+        when(toDoRepository.findById("testId")).thenReturn(Optional.of(oldToDo));
+        when(toDoRepository.save(expected)).thenReturn(expected);
+        ToDo actual = toDoService.updateStatusById(id);
+        //THEN
+        verify(toDoRepository).findById(id);
+        verify(toDoRepository).save(expected);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("updateStatusById with valid id and expect the updated ToDo with status DONE as a return")
+    void updateStatusByIdShouldReturnUpdatedToDoWithStatusDone() {
+        //GIVEN
+        String id = "testId";
+        //WHEN
+        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.IN_PROGRESS);
+        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.DONE);
+        when(toDoRepository.findById("testId")).thenReturn(Optional.of(oldToDo));
+        when(toDoRepository.save(expected)).thenReturn(expected);
+        ToDo actual = toDoService.updateStatusById(id);
+        //THEN
+        verify(toDoRepository).findById(id);
+        verify(toDoRepository).save(expected);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("updateStatusById with valid id but invalid status should throw IllegalStateException")
+    void updateStatusByIdWithInvalidStatusDoneShouldThrowException() {
+        //GIVEN
+        String id = "testId";
+        //WHEN
+        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.DONE);
+        when(toDoRepository.findById("testId")).thenReturn(Optional.of(oldToDo));
+        //THEN
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> toDoService.updateStatusById(id));
+        assertEquals("invalid status", exception.getMessage());
+
+    }
+
+    @Test
+    @DisplayName("updateStatusById with invalid id should throw a ToDoNotFoundException")
+    void updateStatusByIdShouldThrowToDoNotFoundException() {
+        //GIVEN
+        String id = "testId";
+        //WHEN
+
+        //THEN
+        ToDoNotFoundException exception = assertThrows(ToDoNotFoundException.class, () -> toDoService.updateStatusById(id));
+        assertEquals("Could not find todo testId", exception.getMessage());
     }
 }
