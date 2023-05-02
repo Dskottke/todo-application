@@ -3,6 +3,8 @@ package com.example.backend;
 import com.example.backend.model.NewToDo;
 import com.example.backend.model.ToDo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,8 @@ public class ToDoController {
     }
 
     @PostMapping()
-    public ToDo addToDo(@RequestBody NewToDo newToDo) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ToDo addToDo(@Validated @RequestBody NewToDo newToDo) {
         return toDoService.addToDo(newToDo);
     }
 }

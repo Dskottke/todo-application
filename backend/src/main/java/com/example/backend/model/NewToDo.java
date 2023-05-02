@@ -1,4 +1,7 @@
 package com.example.backend.model;
 
-public record NewToDo(String description, String title) {
+
+import lombok.NonNull;
+
+public record NewToDo(@NonNull String description,@NonNull String title) {
 }
