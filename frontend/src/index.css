@@ -84,6 +84,7 @@ body {
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
+
 .btn:hover {
     background: var(--primary-800);
     color: var(--grey-500);
@@ -109,6 +110,7 @@ h4 {
 .nav-container {
     position: absolute;
     display: flex;
+    justify-content: flex-end;
     background-color: var(--grey);
     width: 100%;
     height: 5rem;
@@ -117,7 +119,8 @@ h4 {
 }
 
 .nav-header {
-    margin-left: 20px;
+    position: absolute;
+    left: 2rem;
 }
 
 .nav-header h1 {
@@ -131,6 +134,38 @@ h4 {
 .nav-header span {
     color: var(--primary-100)
 }
+
+.nav-status-area {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 2rem;
+    gap: 3rem;
+}
+.nav-status-area{
+    color: var(--grey-800);
+}
+.nav-status-area svg {
+    font-size: 20px;
+}
+.nav-status-counter {
+    position: relative;
+    font-size: 25px;
+    color: var(--primary-300);
+}
+@media screen and (max-width: 480px) {
+    .nav-status-area {
+        display: grid;
+        gap: normal;
+    }
+    .nav-status-area svg {
+        font-size: 15px;
+    }
+    .nav-status-counter {
+        color: var(--primary-300);
+        font-size: 15px;
+    }
+}
+
 
 /* ----Hero---- */
 .hero-container {

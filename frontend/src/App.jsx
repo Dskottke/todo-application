@@ -17,7 +17,7 @@ function App() {
             {isModalOpen && <AddModal/> }
             <Hero/>
             <BoardOverview/>
-            <ToastContainer/>
+            <ToastContainer position={"top-center"}/>
         </div>
     )
 }
