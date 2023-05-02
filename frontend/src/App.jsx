@@ -9,7 +9,6 @@ import {ToastContainer} from "react-toastify";
 function App() {
 
     const {isModalOpen} = useGlobalContext()
-    console.log(isModalOpen)
 
     return (
         <div className="App">
