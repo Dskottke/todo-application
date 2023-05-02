@@ -1,10 +1,11 @@
 package com.example.backend;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+
 
 import java.util.UUID;
 
-@Service
+@Component
 public class Utils {
 
     public String getUUID(){

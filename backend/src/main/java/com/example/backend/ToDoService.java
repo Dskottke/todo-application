@@ -23,7 +23,7 @@ public class ToDoService {
     public ToDo addToDo(NewToDo newToDo) {
 
         if (checkFieldsAreEmpty(newToDo)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please fill in the input-fields");
+            throw new IllegalArgumentException("Title and description cannot be empty");
         }
 
         return toDoRepository.save(
