@@ -1,4 +1,6 @@
 package com.example.backend.model;
 
-public record ToDo(String id, String description, String title,Status status) {
+import java.time.LocalDate;
+
+public record ToDo(String id, String description, String title, Status status, LocalDate creationDate) {
 }

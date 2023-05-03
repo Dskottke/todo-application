@@ -7,6 +7,7 @@ import com.example.backend.model.ToDo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -29,7 +30,8 @@ public class ToDoService {
                 utils.getUUID(),
                 newToDo.description(),
                 newToDo.title(),
-                Status.OPEN));
+                Status.OPEN,
+                LocalDate.now()));
     }
 
     private boolean checkFieldsAreEmpty(NewToDo newToDo) {
@@ -45,7 +47,9 @@ public class ToDoService {
                 toDo.id(),
                 toDo.description(),
                 toDo.title(),
-                getNextStatus(toDo)));
+                getNextStatus(toDo),
+                toDo.creationDate()
+        ));
     }
 
     private Status getNextStatus(ToDo toDo) {
