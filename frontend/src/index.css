@@ -279,17 +279,17 @@ h4 {
 .todo-container {
     box-shadow: var(--shadow-3);
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    justify-content: center;
+    grid-template-rows: 40px auto auto auto;
     background-color: var(--grey);
-    width: 80%;
     min-height: 200px;
 }
 
 .todo-header {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
     height: 2.5rem;
     color: white;
     background-color: var(--grey-200);
@@ -304,6 +304,8 @@ h4 {
 }
 
 .todo-btn {
+    width: 100px;
+    height: 30px;
     border-radius: var(--borderRadius);
     text-transform: uppercase;
     background: var(--grey-200);
@@ -324,20 +326,22 @@ h4 {
 }
 
 .todo-info {
-    position: relative;
-    display: flex;
+    width: 20rem;
     justify-content: center;
     align-items: center;
     text-align: center;
     color: var(--textColor);
     letter-spacing: 1px;
+    word-wrap: break-word;
+    margin-bottom: 1em;
 }
-.todo-info span{
-    position: absolute;
-    left: 1em;
-    top: 1em;
-    font-size: 0.675rem;
-    margin-right: 0.5rem;
+
+.todo-dates {
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-bottom: 1em;
 }
 
 /*---AddModal---*/
