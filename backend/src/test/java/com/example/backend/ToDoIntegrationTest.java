@@ -2,6 +2,7 @@ package com.example.backend;
 
 import com.example.backend.model.ToDo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ class ToDoIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+
 
     @Test
     @DisplayName("GET - Request , expect empty list and HTTP-status 200")
@@ -52,7 +54,8 @@ class ToDoIntegrationTest {
                             "status": "OPEN"
                         }
                         """))
-                .andExpect(jsonPath("$.id").isNotEmpty());
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.creationDate").isNotEmpty());
     }
 
     @Test
@@ -109,7 +112,10 @@ class ToDoIntegrationTest {
                             "title": "test",
                             "status": "IN_PROGRESS"
                         }
-                        """));
+                        """))
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.creationDate").isNotEmpty());
+        ;
     }
 
     @Test
@@ -148,7 +154,9 @@ class ToDoIntegrationTest {
                             "title": "test",
                             "status": "IN_PROGRESS"
                         }
-                        """));
+                        """))
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.creationDate").isNotEmpty());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/todos/" + toDo.id()))
                 .andExpect(status().isOk())
@@ -158,7 +166,9 @@ class ToDoIntegrationTest {
                             "title": "test",
                             "status": "DONE"
                         }
-                        """));
+                        """))
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.creationDate").isNotEmpty());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/todos/" + toDo.id()))
                 .andExpect(status().isBadRequest())
