@@ -20,13 +20,13 @@ function ToDo({id, title, description, status, creationDate, dueDate}) {
             <div className={"todo-header"}>
                 <h1>{title}</h1>
             </div>
-            <div className={"todo-time"}>
+            <div className={"todo-dates"}>
                 <p>{creationDateFormatted}</p>
                 <p>{daysLeft}</p>
                 <p>{dueDateFormatted}</p>
             </div>
             <div className={"todo-info"}>
-                <p>{description}</p>
+                <p><span>{description}</span></p>
             </div>
             <div className={"todo-action"}>
                 {status !== "DONE" ?
