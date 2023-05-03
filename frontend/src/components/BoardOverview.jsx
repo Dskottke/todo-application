@@ -1,20 +1,10 @@
 import React from 'react';
 import Board from "./Board.jsx";
-import {useQuery} from "react-query";
-import customToDoFetch from "../customFetches.js";
-import {useSortData} from "../hooks.js";
-import {useGlobalContext} from "../Context.jsx";
+import {useFetchToDos, useSortData} from "../hooks.js";
 
 function BoardOverview() {
-    const {setToDos} = useGlobalContext()
 
-    const {isSuccess, isLoading, data, error} = useQuery({
-        queryKey: ['todos'],
-        queryFn: () => customToDoFetch.get(""),
-        onSuccess: (data) => {
-            setToDos(data.data)
-        }
-    })
+    const {isSuccess, isLoading, data, error} = useFetchToDos();
 
     if (isLoading) {
         return (

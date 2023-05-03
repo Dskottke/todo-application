@@ -1,22 +1,11 @@
 import React from 'react';
-import customToDoFetch from "../customFetches.js";
-import {useMutation, useQueryClient} from "react-query";
+import {useAdvanceToDo, useDeleteToDo} from "../hooks.js";
 
 function ToDo({id, title, description, status}) {
-    const queryClient = useQueryClient()
 
-    const {mutate: advanceToDo} = useMutation({
-        mutationFn: (id) => customToDoFetch.put(`/${id}`),
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['todos']})
-        }
-    })
-    const {mutate: deleteToDo} = useMutation({
-        mutationFn: (id) => customToDoFetch.delete(`/${id}`),
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['todos']})
-        }
-    })
+    const {mutate: advanceToDo} = useAdvanceToDo();
+    const {mutate: deleteToDo} = useDeleteToDo();
+
 
     const onDeleteClick = () => {
         deleteToDo(id)

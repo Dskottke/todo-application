@@ -3,22 +3,13 @@ import {useGlobalContext} from "../Context.jsx";
 import {useMutation, useQueryClient} from "react-query";
 import customToDoFetch from "../customFetches.js";
 import {toast} from "react-toastify";
+import {useAddToDo} from "../hooks.js";
 
 function AddForm(props) {
 
     const {closeModal} = useGlobalContext()
-    const queryClient = useQueryClient()
-    const {mutate: createTask, isLoading} = useMutation({
-        mutationFn: (newTodo) => {
-            return customToDoFetch.post('', newTodo)
-        }, onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['todos']})
-            toast.success("New todo added!")
-        }, onError: (error) => {
-            toast.error(error.message)
-        }
 
-    })
+    const {createTask, isLoading} = useAddToDo()
 
     const onFormSubmit = (e) => {
         e.preventDefault()
