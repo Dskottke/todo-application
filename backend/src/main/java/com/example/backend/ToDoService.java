@@ -26,12 +26,15 @@ public class ToDoService {
             throw new IllegalArgumentException("Title and description cannot be empty");
         }
 
-        return toDoRepository.save(new ToDo(
+        return toDoRepository.save(
+                new ToDo(
                 utils.getUUID(),
                 newToDo.description(),
                 newToDo.title(),
                 Status.OPEN,
-                LocalDate.now()));
+                LocalDate.now(),
+                newToDo.dueDate()
+        ));
     }
 
     private boolean checkFieldsAreEmpty(NewToDo newToDo) {
@@ -48,7 +51,8 @@ public class ToDoService {
                 toDo.description(),
                 toDo.title(),
                 getNextStatus(toDo),
-                toDo.creationDate()
+                toDo.creationDate(),
+                toDo.dueDate()
         ));
     }
 

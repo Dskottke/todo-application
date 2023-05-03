@@ -3,5 +3,7 @@ package com.example.backend.model;
 
 import lombok.NonNull;
 
-public record NewToDo(@NonNull String description,@NonNull String title) {
+import java.time.LocalDate;
+
+public record NewToDo(@NonNull String description, @NonNull String title, @NonNull LocalDate dueDate) {
 }
