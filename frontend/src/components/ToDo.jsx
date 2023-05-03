@@ -1,11 +1,11 @@
 import React from 'react';
 import {useAdvanceToDo, useDateFormatter, useDeleteToDo} from "../hooks.js";
 
-function ToDo({id, title, description, status, creationDate}) {
+function ToDo({id, title, description, status, creationDate, dueDate}) {
 
     const {mutate: advanceToDo} = useAdvanceToDo();
     const {mutate: deleteToDo} = useDeleteToDo();
-    const dateFormatted = useDateFormatter(creationDate)
+    const {creationDateFormatted, dueDateFormatted, daysLeft} = useDateFormatter(creationDate,dueDate)
 
     const onDeleteClick = () => {
         deleteToDo(id)
@@ -20,8 +20,12 @@ function ToDo({id, title, description, status, creationDate}) {
             <div className={"todo-header"}>
                 <h1>{title}</h1>
             </div>
+            <div className={"todo-time"}>
+                <p>{creationDateFormatted}</p>
+                <p>{daysLeft}</p>
+                <p>{dueDateFormatted}</p>
+            </div>
             <div className={"todo-info"}>
-                <p><span>{dateFormatted}</span></p>
                 <p>{description}</p>
             </div>
             <div className={"todo-action"}>
