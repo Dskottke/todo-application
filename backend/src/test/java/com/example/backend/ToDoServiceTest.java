@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +41,7 @@ class ToDoServiceTest {
         //GIVEN
         NewToDo testDTO = new NewToDo("testDescription", "testTitle");
         //WHEN
-        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.OPEN);
+        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.OPEN, LocalDate.now());
         when(utils.getUUID()).thenReturn("testId");
         when(toDoRepository.save(expected)).thenReturn(expected);
         ToDo actual = toDoService.addToDo(testDTO);
@@ -59,7 +60,7 @@ class ToDoServiceTest {
 
         //THEN
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> toDoService.addToDo(testDTO));
-        assertEquals("all fields must be filled", exception.getMessage());
+        assertEquals("Title and description cannot be empty", exception.getMessage());
     }
 
     @Test
@@ -68,8 +69,8 @@ class ToDoServiceTest {
         //GIVEN
         String id = "testId";
         //WHEN
-        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.OPEN);
-        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.IN_PROGRESS);
+        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.OPEN, LocalDate.now());
+        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.IN_PROGRESS, LocalDate.now());
         when(toDoRepository.findById("testId")).thenReturn(Optional.of(oldToDo));
         when(toDoRepository.save(expected)).thenReturn(expected);
         ToDo actual = toDoService.updateStatusById(id);
@@ -85,8 +86,8 @@ class ToDoServiceTest {
         //GIVEN
         String id = "testId";
         //WHEN
-        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.IN_PROGRESS);
-        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.DONE);
+        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.IN_PROGRESS, LocalDate.now());
+        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.DONE, LocalDate.now());
         when(toDoRepository.findById("testId")).thenReturn(Optional.of(oldToDo));
         when(toDoRepository.save(expected)).thenReturn(expected);
         ToDo actual = toDoService.updateStatusById(id);
@@ -102,7 +103,7 @@ class ToDoServiceTest {
         //GIVEN
         String id = "testId";
         //WHEN
-        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.DONE);
+        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.DONE, LocalDate.now());
         when(toDoRepository.findById("testId")).thenReturn(Optional.of(oldToDo));
         //THEN
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> toDoService.updateStatusById(id));
@@ -127,7 +128,7 @@ class ToDoServiceTest {
     void deleteByIdAndListShouldBeSmallerAfterDeletingAToDo() {
         //GIVEN
         String id = "testId";
-        when(toDoRepository.findAll()).thenReturn(List.of(new ToDo("testId", "testDescription", "testTitle", Status.OPEN)));
+        when(toDoRepository.findAll()).thenReturn(List.of(new ToDo("testId", "testDescription", "testTitle", Status.OPEN, LocalDate.now())));
         int sizeBefore = toDoService.getAllToDos().size();
         //WHEN
         when(toDoRepository.existsById(id)).thenReturn(true);
