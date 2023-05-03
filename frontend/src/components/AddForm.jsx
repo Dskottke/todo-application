@@ -1,8 +1,5 @@
 import React from 'react';
 import {useGlobalContext} from "../Context.jsx";
-import {useMutation, useQueryClient} from "react-query";
-import customToDoFetch from "../customFetches.js";
-import {toast} from "react-toastify";
 import {useAddToDo} from "../hooks.js";
 
 function AddForm(props) {
@@ -47,7 +44,17 @@ function AddForm(props) {
                     name='description'
                 />
             </div>
-
+            <div className='form-row'>
+                <label htmlFor='description' className='form-label'>
+                    due-date
+                </label>
+                <input
+                    type='date'
+                    className='form-input'
+                    id='dueDate'
+                    name='dueDate'
+                />
+            </div>
             <button type='submit' className='btn' disabled={isLoading}>
                 submit
             </button>
