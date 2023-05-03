@@ -62,17 +62,13 @@ export const useDeleteToDo = () => {
 export const useDateFormatter = (creationDate, dueDate) => {
     const creationDateFormatted = useMemo(() => {
         return new Date(creationDate).toLocaleDateString("de-DE", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
+            year: "numeric", month: "long", day: "numeric"
         })
     }, [creationDate])
 
     const dueDateFormatted = useMemo(() => {
         return new Date(dueDate).toLocaleDateString("de-DE", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
+            year: "numeric", month: "long", day: "numeric"
         })
     }, [dueDate])
 
@@ -85,14 +81,13 @@ export const useDateFormatter = (creationDate, dueDate) => {
 
 export const useGetColor = (daysLeft) => {
     const getColor = (daysLeft) => {
-        if (daysLeft <= 7) {
-            return "#950606"
-        }
-        if (daysLeft <= 14) {
-            return "#ec9900"
-        }
-        if (daysLeft <= 21) {
+        if (daysLeft >= 14) {
             return "#004d00"
+        }
+        if (daysLeft >= 7) {
+            return "#ec9900"
+        } else {
+            return "#ff0000"
         }
     }
     return getColor(daysLeft)
