@@ -82,3 +82,18 @@ export const useDateFormatter = (creationDate, dueDate) => {
 
     return {creationDateFormatted, dueDateFormatted, daysLeft}
 }
+
+export const useGetColor = (daysLeft) => {
+    const getColor = (daysLeft) => {
+        if (daysLeft <= 7) {
+            return "#950606"
+        }
+        if (daysLeft <= 14) {
+            return "#ec9900"
+        }
+        if (daysLeft <= 21) {
+            return "#004d00"
+        }
+    }
+    return getColor(daysLeft)
+}
