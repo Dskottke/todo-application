@@ -2,6 +2,7 @@ import {useGlobalContext} from "./Context.jsx";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import customToDoFetch from "./customFetches.js";
 import {toast} from "react-toastify";
+import {useMemo} from "react";
 
 export const useSortData = (toDos) => {
 
@@ -58,11 +59,26 @@ export const useDeleteToDo = () => {
     })
     return {mutate: deleteToDo}
 }
-export const useDateFormatter = (date) => {
-    const dateFormatted = new Date(date).toLocaleDateString("de-DE", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    })
-    return dateFormatted
+export const useDateFormatter = (creationDate, dueDate) => {
+    const creationDateFormatted = useMemo(() => {
+        return new Date(creationDate).toLocaleDateString("de-DE", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        })
+    }, [creationDate])
+
+    const dueDateFormatted = useMemo(() => {
+        return new Date(dueDate).toLocaleDateString("de-DE", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        })
+    }, [dueDate])
+
+    const daysLeft = useMemo(() => {
+        return Math.floor((new Date(dueDate) - new Date()) / (1000 * 60 * 60 * 24) + 1);
+    }, [dueDate, creationDate]);
+
+    return {creationDateFormatted, dueDateFormatted, daysLeft}
 }
