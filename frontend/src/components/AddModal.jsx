@@ -1,5 +1,5 @@
 import React from 'react';
-import {useGlobalContext} from "./Context.jsx";
+import {useGlobalContext} from "../Context.jsx";
 import {HiOutlineXMark} from 'react-icons/hi2'
 import AddForm from "./AddForm.jsx";
 

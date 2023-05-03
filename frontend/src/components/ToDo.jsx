@@ -1,5 +1,5 @@
 import React from 'react';
-import customToDoFetch from "./customFetches.js";
+import customToDoFetch from "../customFetches.js";
 import {useMutation, useQueryClient} from "react-query";
 
 function ToDo({id, title, description, status}) {

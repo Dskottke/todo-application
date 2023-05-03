@@ -12,3 +12,6 @@ export const useSortData = (toDos) => {
 
     return {openList,inProgressList,closed}
 }
+export const useFetchToDos = () => {
+
+}

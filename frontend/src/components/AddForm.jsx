@@ -1,7 +1,7 @@
 import React from 'react';
-import {useGlobalContext} from "./Context.jsx";
+import {useGlobalContext} from "../Context.jsx";
 import {useMutation, useQueryClient} from "react-query";
-import customToDoFetch from "./customFetches.js";
+import customToDoFetch from "../customFetches.js";
 import {toast} from "react-toastify";
 
 function AddForm(props) {

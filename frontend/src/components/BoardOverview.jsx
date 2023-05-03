@@ -1,9 +1,9 @@
 import React from 'react';
 import Board from "./Board.jsx";
 import {useQuery} from "react-query";
-import customToDoFetch from "./customFetches.js";
-import {useSortData} from "./hooks.js";
-import {useGlobalContext} from "./Context.jsx";
+import customToDoFetch from "../customFetches.js";
+import {useSortData} from "../hooks.js";
+import {useGlobalContext} from "../Context.jsx";
 
 function BoardOverview() {
     const {setToDos} = useGlobalContext()

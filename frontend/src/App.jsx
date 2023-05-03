@@ -1,8 +1,8 @@
 
-import Navbar from "./Navbar.jsx";
-import Hero from "./Hero.jsx";
-import BoardOverview from "./BoardOverview.jsx";
-import AddModal from "./AddModal.jsx";
+import Navbar from "./components/Navbar.jsx";
+import Hero from "./components/Hero.jsx";
+import BoardOverview from "./components/BoardOverview.jsx";
+import AddModal from "./components/AddModal.jsx";
 import {useGlobalContext} from "./Context.jsx";
 import {ToastContainer} from "react-toastify";
 

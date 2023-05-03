@@ -1,5 +1,5 @@
 import React from 'react';
-import {useGlobalContext} from "./Context.jsx";
+import {useGlobalContext} from "../Context.jsx";
 import {GrCheckmark, GrInProgress} from "react-icons/gr";
 import {CgOpenCollective} from "react-icons/cg";
 
