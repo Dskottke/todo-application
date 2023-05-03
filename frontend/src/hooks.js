@@ -58,3 +58,11 @@ export const useDeleteToDo = () => {
     })
     return {mutate: deleteToDo}
 }
+export const useDateFormatter = (date) => {
+    const dateFormatted = new Date(date).toLocaleDateString("de-DE", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    })
+    return dateFormatted
+}

@@ -324,12 +324,20 @@ h4 {
 }
 
 .todo-info {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     color: var(--textColor);
     letter-spacing: 1px;
+}
+.todo-info span{
+    position: absolute;
+    left: 1em;
+    top: 1em;
+    font-size: 0.675rem;
+    margin-right: 0.5rem;
 }
 
 /*---AddModal---*/
