@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.security;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
