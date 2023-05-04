@@ -1,9 +1,11 @@
 package com.example.backend;
 
-import com.example.backend.exception.ToDoNotFoundException;
-import com.example.backend.model.NewToDo;
-import com.example.backend.model.Status;
-import com.example.backend.model.ToDo;
+import com.example.backend.todos.ToDoNotFoundException;
+import com.example.backend.todos.NewToDo;
+import com.example.backend.todos.Status;
+import com.example.backend.todos.ToDo;
+import com.example.backend.todos.ToDoRepository;
+import com.example.backend.todos.ToDoService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

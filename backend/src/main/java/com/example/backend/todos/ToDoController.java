@@ -1,7 +1,5 @@
-package com.example.backend;
+package com.example.backend.todos;
 
-import com.example.backend.model.NewToDo;
-import com.example.backend.model.ToDo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
