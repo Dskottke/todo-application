@@ -275,6 +275,7 @@ h4 {
     place-items: center;
     margin-bottom: 1rem;
 }
+
 @media screen and (max-width: 680px) {
     .board {
         border: groove 1px #e5e5e5;
@@ -330,12 +331,13 @@ h4 {
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
+
 .todo-btn:hover {
     background-color: transparent;
     color: var(--grey-500);
 }
 
-.triangle{
+.triangle {
     position: absolute;
     top: -0.1em;
     left: -0.75em;
@@ -370,7 +372,8 @@ h4 {
     width: 100%;
     margin-bottom: 1em;
 }
-.todo-relaxed{
+
+.todo-relaxed {
 
 }
 
@@ -421,7 +424,7 @@ h4 {
 
 /* ----AddForm----*/
 .form-header {
-
+    text-align: center;
 }
 
 .form {
@@ -455,6 +458,45 @@ h4 {
     color: var(--grey-500);
     margin-bottom: 2rem;
     font-variant-caps: all-petite-caps;
+}
+
+/* ----LoginPage----*/
+
+.login-page {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #2f5c74;
+}
+
+.login-mask {
+    border-radius: 10px;
+    display: grid;
+    gap: 1rem;
+    background-color: var(--grey);
+    min-width: 300px;
+    min-height: 300px;
+    box-shadow: var(--shadow-3);
+}
+.login-mask .form-header {
+    margin-top: 2rem;
+    display: grid;
+    justify-content: center;
+}
+
+.login-mask .form-row {
+    display: grid;
+    gap: 1em;
+}
+
+.form-action {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
 }
 
 

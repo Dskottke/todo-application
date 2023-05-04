@@ -1,6 +1,6 @@
 import axios from "axios";
 
- const customToDoFetch = axios.create({
+const customToDoFetch = axios.create({
     baseURL: "/api/todos"
 });
 
