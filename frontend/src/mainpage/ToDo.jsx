@@ -9,7 +9,6 @@ function ToDo({id, title, description, status, creationDate, dueDate}) {
     const color = useGetColor(daysLeft)
 
 
-
     const onDeleteClick = () => {
         deleteToDo(id)
     }
@@ -21,7 +20,7 @@ function ToDo({id, title, description, status, creationDate, dueDate}) {
     return (
         <article className={"todo-container"}>
             <div className={"todo-header"}>
-                <div style={{borderBottomColor: color }} className={"triangle"}></div>
+                <div style={{borderBottomColor: color}} className={"triangle"}></div>
                 <h1>{title}</h1>
 
             </div>
@@ -30,9 +29,10 @@ function ToDo({id, title, description, status, creationDate, dueDate}) {
                 <p><span>{description}</span></p>
             </div>
             <div className={"todo-dates"}>
-                <p>start : {creationDateFormatted}</p>
-                <p>days left: <span style={{color:color}}>{daysLeft}</span></p>
-                <p>end: {dueDateFormatted}</p>
+                <p>Start : {creationDateFormatted}</p>
+                <p>Days left: <span style={{color: color}}>
+                    {daysLeft === 0 ? "Today" : daysLeft}</span></p>
+                <p>End: {dueDateFormatted}</p>
             </div>
             <div className={"todo-action"}>
                 {status !== "DONE" ?
