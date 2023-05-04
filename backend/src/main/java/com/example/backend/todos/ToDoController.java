@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/todos")
+@RequestMapping("api/todo")
 @RequiredArgsConstructor
 public class ToDoController {
 

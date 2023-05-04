@@ -12,6 +12,7 @@ const AppContext = ({children}) => {
     const nav = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [toDos, setToDos] = useState({})
+    const [authorized, setAuthorized] = useState(false)
 
     const fetchUser = (credentials) => {
 
@@ -20,9 +21,10 @@ const AppContext = ({children}) => {
                 username: credentials.username,
                 password: credentials.password
             }
-            })
+        })
             .then((response) => {
                 if (response.status === 200) {
+                    setAuthorized(true)
                     nav("/main")
                 }
             }).catch((error) => {
@@ -51,7 +53,18 @@ const AppContext = ({children}) => {
     }
 
     const value = useMemo(() => {
-        return {isModalOpen, openModal, closeModal, toDos, setToDos, openAmount, inProgressAmount, doneAmount,fetchUser}
+        return {
+            isModalOpen,
+            openModal,
+            closeModal,
+            toDos,
+            setToDos,
+            openAmount,
+            inProgressAmount,
+            doneAmount,
+            fetchUser,
+            authorized
+        }
     }, [isModalOpen, toDos])
 
     return (
