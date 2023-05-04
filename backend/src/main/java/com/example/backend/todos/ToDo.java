@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public record ToDo(
         String id,
+        String username,
         String description,
         String title,
         Status status,
