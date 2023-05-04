@@ -1,19 +1,19 @@
 import React from 'react'
 
-import WebSite from "./components/WebSite.jsx";
+import MainPage from "./mainpage/MainPage.jsx";
 import {Route, Routes} from "react-router-dom";
-import Login from "./components/Login.jsx";
+import LoginPage from "./login/LoginPage.jsx";
 
 function App() {
 
 
     return (
-        <div className="App">
+        <section className="App">
             <Routes>
-                <Route path={"/"} element={<Login/>}/>
-                <Route path={"/main"} element={<WebSite/>}/>
+                <Route path={"/"} element={<LoginPage/>}/>
+                <Route path={"/main"} element={<MainPage/>}/>
             </Routes>
-        </div>
+        </section>
     )
 }
 

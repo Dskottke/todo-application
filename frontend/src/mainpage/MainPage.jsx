@@ -6,7 +6,7 @@ import BoardOverview from "./BoardOverview.jsx";
 import {ToastContainer} from "react-toastify";
 import {useGlobalContext} from "../Context.jsx";
 
-function WebSite() {
+function MainPage() {
     const {isModalOpen} = useGlobalContext()
     return (<div>
         <Navbar/>
@@ -17,4 +17,4 @@ function WebSite() {
     </div>);
 }
 
-export default WebSite;
+export default MainPage;
