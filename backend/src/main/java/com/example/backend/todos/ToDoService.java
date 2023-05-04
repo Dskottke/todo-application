@@ -1,9 +1,6 @@
-package com.example.backend;
+package com.example.backend.todos;
 
-import com.example.backend.exception.ToDoNotFoundException;
-import com.example.backend.model.NewToDo;
-import com.example.backend.model.Status;
-import com.example.backend.model.ToDo;
+import com.example.backend.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

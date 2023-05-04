@@ -1,6 +1,6 @@
 package com.example.backend;
 
-import com.example.backend.model.ToDo;
+import com.example.backend.todos.ToDo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.DisplayName;

@@ -1,6 +1,5 @@
-package com.example.backend;
+package com.example.backend.todos;
 
-import com.example.backend.model.ToDo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
