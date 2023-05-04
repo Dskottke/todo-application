@@ -3,7 +3,10 @@ package com.example.backend.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,10 +24,14 @@ public class SecurityConfig {
         return http.csrf()
                 .disable()
                 .httpBasic()
+                .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase()))
                 .and()
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(r -> true)
-                        .authenticated())
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, "/api/user").permitAll()
+                .requestMatchers("/api/todos/**").authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .and()
                 .build();
     }
 
