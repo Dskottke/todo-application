@@ -2,7 +2,9 @@ import {useGlobalContext} from "./Context.jsx";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import customToDoFetch from "./customFetches.js";
 import {toast} from "react-toastify";
-import {useMemo} from "react";
+import {useEffect, useMemo, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 export const useSortData = (toDos) => {
 
@@ -92,4 +94,25 @@ export const useGetColor = (daysLeft) => {
         }
     }
     return getColor(daysLeft)
+}
+
+export const useAuth = () => {
+    const [user, setUser] = useState();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get("/api/user/me").then(res => {
+            if (res.data === "anonymousUser") {
+                navigate("/login");
+            }
+            setUser(res.data);
+        }).catch(e => {
+            if (e.response.status === 401) {
+                navigate("/login");
+            }
+        });
+    }, [navigate]);
+
+    return user;
+
 }
