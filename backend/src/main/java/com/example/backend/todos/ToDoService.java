@@ -2,6 +2,7 @@ package com.example.backend.todos;
 
 import com.example.backend.Utils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,7 +15,8 @@ public class ToDoService {
     private final Utils utils;
 
     public List<ToDo> getAllToDos() {
-        return toDoRepository.findAll();
+
+        return toDoRepository.findAllByUsername(getCurrentUsername());
     }
 
     public ToDo addToDo(NewToDo newToDo) {
@@ -23,15 +25,17 @@ public class ToDoService {
             throw new IllegalArgumentException("Title and description cannot be empty");
         }
 
+
         return toDoRepository.save(
                 new ToDo(
-                utils.getUUID(),
-                newToDo.description(),
-                newToDo.title(),
-                Status.OPEN,
-                LocalDate.now(),
-                newToDo.dueDate()
-        ));
+                        utils.getUUID(),
+                        getCurrentUsername(),
+                        newToDo.description(),
+                        newToDo.title(),
+                        Status.OPEN,
+                        LocalDate.now(),
+                        newToDo.dueDate()
+                ));
     }
 
     private boolean checkFieldsAreEmpty(NewToDo newToDo) {
@@ -45,6 +49,7 @@ public class ToDoService {
 
         return toDoRepository.save(new ToDo(
                 toDo.id(),
+                toDo.username(),
                 toDo.description(),
                 toDo.title(),
                 getNextStatus(toDo),
@@ -67,5 +72,12 @@ public class ToDoService {
             throw new ToDoNotFoundException(id);
         }
         toDoRepository.deleteById(id);
+    }
+
+    private String getCurrentUsername() {
+        return SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
     }
 }

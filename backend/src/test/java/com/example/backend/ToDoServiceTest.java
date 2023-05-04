@@ -1,14 +1,14 @@
 package com.example.backend;
 
-import com.example.backend.todos.ToDoNotFoundException;
-import com.example.backend.todos.NewToDo;
-import com.example.backend.todos.Status;
-import com.example.backend.todos.ToDo;
-import com.example.backend.todos.ToDoRepository;
-import com.example.backend.todos.ToDoService;
+import com.example.backend.todos.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -18,32 +18,50 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+
 class ToDoServiceTest {
 
     private final ToDoRepository toDoRepository = Mockito.mock(ToDoRepository.class);
     private final Utils utils = Mockito.mock(Utils.class);
     private final ToDoService toDoService = new ToDoService(toDoRepository, utils);
 
+
     @Test
     @DisplayName("getAllToDos and expect an empty list")
     void getAllToDosExpectEmptyList() {
         //GIVEN
+        Authentication authentication = new UsernamePasswordAuthenticationToken("testName", "testPassword");
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(authentication);
+        SecurityContextHolder.setContext(securityContext);
         List<ToDo> expected = Collections.emptyList();
         //WHEN
-        when(toDoRepository.findAll()).thenReturn(expected);
+        when(toDoRepository.findAllByUsername("testName")).thenReturn(expected);
         List<ToDo> actual = toDoService.getAllToDos();
         //THEN
-        verify(toDoRepository).findAll();
+        verify(toDoRepository).findAllByUsername("testName");
         assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("AddToDo with a newToDo DTO and expect the new ToDo as a return")
+    @WithMockUser(username = "testName")
     void addToDoWithDtoAndExpectToDo() {
         //GIVEN
-        NewToDo testDTO = new NewToDo("testDescription", "testTitle");
+        Authentication authentication = new UsernamePasswordAuthenticationToken("testName", "testPassword");
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        NewToDo testDTO = new NewToDo("testDescription", "testTitle", LocalDate.now().plusDays(1));
         //WHEN
-        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.OPEN, LocalDate.now());
+        ToDo expected = new ToDo(
+                "testId",
+                "testName",
+                "testDescription",
+                "testTitle",
+                Status.OPEN,
+                LocalDate.now(),
+                LocalDate.now().plusDays(1));
         when(utils.getUUID()).thenReturn("testId");
         when(toDoRepository.save(expected)).thenReturn(expected);
         ToDo actual = toDoService.addToDo(testDTO);
@@ -57,7 +75,7 @@ class ToDoServiceTest {
     @DisplayName("AddToDo with a newToDo DTO that has empty fields - should throw IllegalArgumentException")
     void addToDoWithDtoAndExpectException() {
         //GIVEN
-        NewToDo testDTO = new NewToDo("", "");
+        NewToDo testDTO = new NewToDo("", "", LocalDate.now());
         //WHEN
 
         //THEN
@@ -71,8 +89,24 @@ class ToDoServiceTest {
         //GIVEN
         String id = "testId";
         //WHEN
-        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.OPEN, LocalDate.now());
-        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.IN_PROGRESS, LocalDate.now());
+        ToDo oldToDo = new ToDo(
+                "testId",
+                "testName",
+                "testDescription",
+                "testTitle",
+                Status.OPEN,
+                LocalDate.now(),
+                LocalDate.now().plusDays(1));
+
+        ToDo expected = new ToDo(
+                "testId",
+                "testName",
+                "testDescription",
+                "testTitle",
+                Status.IN_PROGRESS,
+                LocalDate.now(),
+                LocalDate.now().plusDays(1));
+
         when(toDoRepository.findById("testId")).thenReturn(Optional.of(oldToDo));
         when(toDoRepository.save(expected)).thenReturn(expected);
         ToDo actual = toDoService.updateStatusById(id);
@@ -88,8 +122,24 @@ class ToDoServiceTest {
         //GIVEN
         String id = "testId";
         //WHEN
-        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.IN_PROGRESS, LocalDate.now());
-        ToDo expected = new ToDo("testId", "testDescription", "testTitle", Status.DONE, LocalDate.now());
+        ToDo oldToDo = new ToDo(
+                "testId",
+                "testName",
+                "testDescription",
+                "testTitle",
+                Status.IN_PROGRESS,
+                LocalDate.now(),
+                LocalDate.now().plusDays(1));
+
+        ToDo expected = new ToDo(
+                "testId",
+                "testName",
+                "testDescription",
+                "testTitle",
+                Status.DONE,
+                LocalDate.now(),
+                LocalDate.now().plusDays(1));
+
         when(toDoRepository.findById("testId")).thenReturn(Optional.of(oldToDo));
         when(toDoRepository.save(expected)).thenReturn(expected);
         ToDo actual = toDoService.updateStatusById(id);
@@ -105,7 +155,15 @@ class ToDoServiceTest {
         //GIVEN
         String id = "testId";
         //WHEN
-        ToDo oldToDo = new ToDo("testId", "testDescription", "testTitle", Status.DONE, LocalDate.now());
+        ToDo oldToDo = new ToDo(
+                "testId",
+                "testName",
+                "testDescription",
+                "testTitle",
+                Status.DONE,
+                LocalDate.now(),
+                LocalDate.now().plusDays(1));
+
         when(toDoRepository.findById("testId")).thenReturn(Optional.of(oldToDo));
         //THEN
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> toDoService.updateStatusById(id));
@@ -130,17 +188,31 @@ class ToDoServiceTest {
     void deleteByIdAndListShouldBeSmallerAfterDeletingAToDo() {
         //GIVEN
         String id = "testId";
-        when(toDoRepository.findAll()).thenReturn(List.of(new ToDo("testId", "testDescription", "testTitle", Status.OPEN, LocalDate.now())));
+        Authentication authentication = new UsernamePasswordAuthenticationToken("testName", "testPassword");
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        when(toDoRepository.findAllByUsername("testName")).thenReturn(List.of(
+                new ToDo(
+                        "testId",
+                        "testName",
+                        "testDescription",
+                        "testTitle",
+                        Status.OPEN,
+                        LocalDate.now(),
+                        LocalDate.now().plusDays(1))));
+
         int sizeBefore = toDoService.getAllToDos().size();
         //WHEN
         when(toDoRepository.existsById(id)).thenReturn(true);
         doNothing().when(toDoRepository).deleteById(id);
-        when(toDoRepository.findAll()).thenReturn(Collections.emptyList());
+        when(toDoRepository.findAllByUsername("testName")).thenReturn(Collections.emptyList());
         toDoService.deleteToDoById(id);
         int sizeAfter = toDoService.getAllToDos().size();
         //THEN
         verify(toDoRepository).existsById(id);
-        verify(toDoRepository, times(2)).findAll();
+        verify(toDoRepository, times(2)).findAllByUsername("testName");
         verify(toDoRepository).deleteById(id);
         assertTrue(sizeBefore > sizeAfter);
     }
