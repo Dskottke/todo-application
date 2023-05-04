@@ -5,14 +5,17 @@ import './index.css'
 import {QueryClient, QueryClientProvider} from "react-query";
 import AppContext from "./Context.jsx";
 import 'react-toastify/dist/ReactToastify.css'
+import {BrowserRouter} from "react-router-dom";
 
 const client = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <QueryClientProvider client={client}>
-            <AppContext>
-                <App/>
-            </AppContext>
-        </QueryClientProvider>
+        <BrowserRouter>
+            <QueryClientProvider client={client}>
+                <AppContext>
+                    <App/>
+                </AppContext>
+            </QueryClientProvider>
+        </BrowserRouter>
     </React.StrictMode>
 )

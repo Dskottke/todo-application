@@ -1,22 +1,18 @@
+import React from 'react'
 
-import Navbar from "./components/Navbar.jsx";
-import Hero from "./components/Hero.jsx";
-import BoardOverview from "./components/BoardOverview.jsx";
-import AddModal from "./components/AddModal.jsx";
-import {useGlobalContext} from "./Context.jsx";
-import {ToastContainer} from "react-toastify";
+import WebSite from "./components/WebSite.jsx";
+import {Route, Routes} from "react-router-dom";
+import Login from "./components/Login.jsx";
 
 function App() {
 
-    const {isModalOpen} = useGlobalContext()
 
     return (
         <div className="App">
-            <Navbar/>
-            {isModalOpen && <AddModal/> }
-            <Hero/>
-            <BoardOverview/>
-            <ToastContainer position={"top-center"}/>
+            <Routes>
+                <Route path={"/"} element={<Login/>}/>
+                <Route path={"/main"} element={<WebSite/>}/>
+            </Routes>
         </div>
     )
 }
