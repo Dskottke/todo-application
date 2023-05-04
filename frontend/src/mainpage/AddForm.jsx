@@ -12,8 +12,7 @@ function AddForm(props) {
     const onFormSubmit = (e) => {
         e.preventDefault()
         const data = new FormData(e.currentTarget)
-        const todo = Object.fromEntries(data)
-        createTask(todo)
+        createTask(Object.fromEntries(data))
         closeModal();
     }
 
@@ -52,6 +51,7 @@ function AddForm(props) {
                 <input
                     type='date'
                     min={minDate}
+                    defaultValue={minDate}
                     className='form-input'
                     id='dueDate'
                     name='dueDate'
