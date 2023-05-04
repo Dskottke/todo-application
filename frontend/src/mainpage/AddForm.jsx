@@ -1,6 +1,7 @@
 import React from 'react';
 import {useGlobalContext} from "../Context.jsx";
 import {useAddToDo} from "../hooks.js";
+import {minDate} from "../Constants.js";
 
 function AddForm(props) {
 
@@ -50,6 +51,7 @@ function AddForm(props) {
                 </label>
                 <input
                     type='date'
+                    min={minDate}
                     className='form-input'
                     id='dueDate'
                     name='dueDate'

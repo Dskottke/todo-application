@@ -1,5 +1,5 @@
 import {createContext, useContext, useMemo, useState} from "react";
-import {DONE, IN_PROGRESS, OPEN} from "./types.js";
+import {DONE, IN_PROGRESS, OPEN} from "./Constants.js";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
