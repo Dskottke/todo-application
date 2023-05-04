@@ -1,22 +1,20 @@
 import {createContext, useContext, useMemo, useState} from "react";
 import {DONE, IN_PROGRESS, OPEN} from "./types.js";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 export const GlobalContext = createContext({})
 export const useGlobalContext = () => useContext(GlobalContext)
 
 const AppContext = ({children}) => {
-
-    const nav = useNavigate()
+    const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [toDos, setToDos] = useState({})
-    const [authorized, setAuthorized] = useState(false)
 
     const fetchUser = (credentials) => {
 
-        axios.get("/api/user", {
+        axios.get("/api/user/", {
             auth: {
                 username: credentials.username,
                 password: credentials.password
@@ -24,13 +22,12 @@ const AppContext = ({children}) => {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    setAuthorized(true)
-                    nav("/main")
+                    navigate("/")
                 }
-            }).catch((error) => {
-            toast.error(error.message)
-        })
-
+            })
+            .catch((error) => {
+                toast.error(error.message)
+            })
     }
 
     const openAmount = useMemo(() => {
@@ -62,8 +59,7 @@ const AppContext = ({children}) => {
             openAmount,
             inProgressAmount,
             doneAmount,
-            fetchUser,
-            authorized
+            fetchUser
         }
     }, [isModalOpen, toDos])
 
