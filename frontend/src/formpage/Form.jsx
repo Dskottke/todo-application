@@ -1,17 +1,14 @@
 import React from 'react';
-import {useGlobalContext} from "../Context.jsx";
+import {useNavigate} from "react-router-dom";
 
-function LoginForm(props) {
-
-    const {fetchUser} = useGlobalContext()
+function Form({submitButtonText, secondaryButtonText, submitFunction, navLink}) {
+    const nav = useNavigate();
     const onFormSubmit = (e) => {
         e.preventDefault()
         const data = new FormData(e.currentTarget)
         const credentials = Object.fromEntries(data)
-        fetchUser(credentials)
+        submitFunction(credentials)
     }
-
-
     return (
         <form onSubmit={onFormSubmit} className={"form"}>
             <div className={"form-row"}>
@@ -23,11 +20,11 @@ function LoginForm(props) {
                 <input className={"form-input"} type="password" id={"password"} name={"password"}/>
             </div>
             <div className={"form-action"}>
-                <button className={"btn"} type={"submit"}>Login</button>
-                <button className={"btn"} type={"button"}>Register</button>
+                <button className={"btn"} type={"submit"}>{submitButtonText}</button>
+                <button onClick={() => nav(navLink)} className={"btn"} type={"button"}>{secondaryButtonText}</button>
             </div>
         </form>
     );
 }
 
-export default LoginForm;
+export default Form;
