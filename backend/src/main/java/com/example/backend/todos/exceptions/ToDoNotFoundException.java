@@ -1,4 +1,4 @@
-package com.example.backend.todos;
+package com.example.backend.todos.exceptions;
 
 public class ToDoNotFoundException extends RuntimeException {
     public ToDoNotFoundException(String id) {

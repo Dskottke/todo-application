@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/api/user/*").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/user/*").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/user/logout").authenticated()
                 .requestMatchers("/api/todo/**").authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("api/user/")
 @RequiredArgsConstructor
@@ -25,5 +26,11 @@ public class AppUserController {
     @PostMapping
     public String create(@RequestBody NewUser newUser) {
         return appUserService.create(newUser);
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        SecurityContextHolder.clearContext();
+        return "logout";
     }
 }

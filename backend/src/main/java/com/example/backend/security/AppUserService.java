@@ -1,6 +1,8 @@
 package com.example.backend.security;
 
 import com.example.backend.Utils;
+import com.example.backend.security.exceptions.PasswordValidationException;
+import com.example.backend.security.exceptions.UsernameIsTakenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

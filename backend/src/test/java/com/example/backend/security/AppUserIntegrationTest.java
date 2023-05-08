@@ -96,4 +96,15 @@ class AppUserIntegrationTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Password must contain at least 8 characters, one uppercase letter, one digit and one special character."));
     }
+
+    @Test
+    @DirtiesContext
+    @DisplayName("GET - Request , expect HTTP-status 200 and the logout message")
+    @WithMockUser()
+    void logoutAndExpectHttpStatus200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/logout"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("logout"));
+    }
+
 }

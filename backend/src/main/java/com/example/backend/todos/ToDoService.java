@@ -1,6 +1,7 @@
 package com.example.backend.todos;
 
 import com.example.backend.Utils;
+import com.example.backend.todos.exceptions.ToDoNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

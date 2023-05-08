@@ -1,4 +1,4 @@
-package com.example.backend.security;
+package com.example.backend.security.exceptions;
 
 public class PasswordValidationException extends RuntimeException {
     public PasswordValidationException(String message) {

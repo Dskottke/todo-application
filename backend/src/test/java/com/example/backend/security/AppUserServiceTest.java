@@ -1,8 +1,12 @@
 package com.example.backend.security;
 
 import com.example.backend.Utils;
+import com.example.backend.security.exceptions.PasswordValidationException;
+import com.example.backend.security.exceptions.UsernameIsTakenException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -70,44 +74,16 @@ class AppUserServiceTest {
         assertEquals("Username : " + newUser.username() + " is already taken.", exception.getMessage());
     }
 
-    @Test
-    @DisplayName("create - should throw PasswordValidationException when password is too short")
-    void createShouldThrowPasswordValidationExceptionWhenPasswordIsTooShort() {
+    @ParameterizedTest
+    @CsvSource({
+            "pass",
+            "password1!",
+            "Password!",
+            "Password1"})
+    @DisplayName("validate - should throw PasswordValidationException")
+    void validateDifferentNotValidPasswordsShouldThrowException(String password) {
         //GIVEN
-        NewUser newUser = new NewUser("user", "pass");
-        //WHEN
-        //THEN
-        PasswordValidationException exception = assertThrows(PasswordValidationException.class, () -> appUserService.create(newUser));
-        assertEquals("Password must contain at least 8 characters, one uppercase letter, one digit and one special character.", exception.getMessage());
-    }
-
-    @Test
-    @DisplayName("create - should throw PasswordValidationException when password doesn't contain uppercase letter")
-    void createShouldThrowPasswordValidationExceptionWhenPasswordDoesntContainUppercaseLetter() {
-        //GIVEN
-        NewUser newUser = new NewUser("user", "password1!");
-        //WHEN
-        //THEN
-        PasswordValidationException exception = assertThrows(PasswordValidationException.class, () -> appUserService.create(newUser));
-        assertEquals("Password must contain at least 8 characters, one uppercase letter, one digit and one special character.", exception.getMessage());
-    }
-
-    @Test
-    @DisplayName("create - should throw PasswordValidationException when password doesn't contain digit")
-    void createShouldThrowPasswordValidationExceptionWhenPasswordDoesntContainDigit() {
-        //GIVEN
-        NewUser newUser = new NewUser("user", "Password!");
-        //WHEN
-        //THEN
-        PasswordValidationException exception = assertThrows(PasswordValidationException.class, () -> appUserService.create(newUser));
-        assertEquals("Password must contain at least 8 characters, one uppercase letter, one digit and one special character.", exception.getMessage());
-    }
-
-    @Test
-    @DisplayName("create - should throw PasswordValidationException when password doesn't contain special character")
-    void createShouldThrowPasswordValidationExceptionWhenPasswordDoesntContainSpecialCharacter() {
-        //GIVEN
-        NewUser newUser = new NewUser("user", "Password1");
+        NewUser newUser = new NewUser("user", password);
         //WHEN
         //THEN
         PasswordValidationException exception = assertThrows(PasswordValidationException.class, () -> appUserService.create(newUser));

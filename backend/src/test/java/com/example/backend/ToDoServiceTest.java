@@ -1,6 +1,7 @@
 package com.example.backend;
 
 import com.example.backend.todos.*;
+import com.example.backend.todos.exceptions.ToDoNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
