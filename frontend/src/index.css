@@ -112,11 +112,17 @@ h4 {
     position: absolute;
     display: flex;
     justify-content: flex-end;
+    gap: 4rem;
     background-color: var(--grey);
     width: 100%;
     height: 5rem;
     box-shadow: var(--shadow-3);
     place-items: center;
+}
+
+.nav-user span {
+    color: var(--primary-100);
+    text-transform: capitalize;
 }
 
 .nav-header {
@@ -157,10 +163,14 @@ h4 {
     color: var(--primary-300);
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 770px) {
     .nav-status-area {
         display: grid;
         gap: normal;
+    }
+
+    .nav-user {
+        margin-top: -2rem;
     }
 
     .nav-status-area svg {
@@ -216,7 +226,7 @@ h4 {
     color: white;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 770px) {
     .hero-container h1 {
         font-size: 30px;
         letter-spacing: 0;
@@ -237,7 +247,7 @@ h4 {
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 770px) {
     .board-container {
         display: grid;
         grid-template-columns: none;
@@ -276,7 +286,7 @@ h4 {
     margin-bottom: 1rem;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 770px) {
     .board {
         border: groove 1px #e5e5e5;
         border-bottom: none;
@@ -480,6 +490,7 @@ h4 {
     min-height: 300px;
     box-shadow: var(--shadow-3);
 }
+
 .login-mask .form-header {
     margin-top: 2rem;
     display: grid;

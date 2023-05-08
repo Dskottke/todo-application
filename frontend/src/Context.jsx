@@ -11,6 +11,8 @@ const AppContext = ({children}) => {
     const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [toDos, setToDos] = useState({})
+    const [currentUser, setCurrentUser] = useState(null)
+
     const fetchUser = (credentials) => {
 
         axios.get("/api/user/", {
@@ -31,6 +33,9 @@ const AppContext = ({children}) => {
 
 
     }
+    const getCurrentUser = useMemo(() => {
+        return currentUser
+    }, [currentUser])
 
     const openAmount = useMemo(() => {
         return Object.values(toDos).filter((toDo) => toDo.status === OPEN).length
@@ -61,7 +66,9 @@ const AppContext = ({children}) => {
             openAmount,
             inProgressAmount,
             doneAmount,
-            fetchUser
+            fetchUser,
+            setCurrentUser,
+            getCurrentUser
         }
     }, [isModalOpen, toDos])
 

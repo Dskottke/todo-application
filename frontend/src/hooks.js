@@ -97,6 +97,7 @@ export const useGetColor = (daysLeft) => {
 }
 
 export const useAuth = () => {
+    const {setCurrentUser} = useGlobalContext();
     const [user, setUser] = useState();
     const navigate = useNavigate();
 
@@ -105,6 +106,7 @@ export const useAuth = () => {
             if (res.data === "anonymousUser") {
                 navigate("/login");
             }
+            setCurrentUser(res.data);
             setUser(res.data);
         }).catch(e => {
             if (e.response.status === 401) {
