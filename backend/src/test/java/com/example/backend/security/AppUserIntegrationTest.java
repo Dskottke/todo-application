@@ -46,7 +46,7 @@ class AppUserIntegrationTest {
                         .content("""
                                 {
                                     "username": "user",
-                                    "password": "password"
+                                    "password": "paSsword1!"
                                 }
                                 """)
                         .contentType("application/json"))
@@ -62,7 +62,7 @@ class AppUserIntegrationTest {
                         .content("""
                                 {
                                     "username": "user",
-                                    "password": "password"
+                                    "password": "paSsword1!"
                                 }
                                 """)
                         .contentType("application/json"))
@@ -73,11 +73,27 @@ class AppUserIntegrationTest {
                         .content("""
                                 {
                                     "username": "user",
-                                    "password": "password"
+                                    "password": "paSsword1!"
                                 }
                                 """)
                         .contentType("application/json"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Username : " + "user" + " is already taken."));
+    }
+
+    @Test
+    @DirtiesContext
+    @DisplayName("POST - Request , expect HTTP-status 400 and the Password that is not valid")
+    void createAndExpectHttpStatus400PasswordNotValid() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/")
+                        .content("""
+                                {
+                                    "username": "user",
+                                    "password": "password"
+                                }
+                                """)
+                        .contentType("application/json"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Password must contain at least 8 characters, one uppercase letter, one digit and one special character."));
     }
 }

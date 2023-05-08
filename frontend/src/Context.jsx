@@ -41,8 +41,10 @@ const AppContext = ({children}) => {
                 navigate("/login")
             }
         }).catch((error) => {
-            if (error.response.status === 400)
+            if (error.response.status === 400 && !error.response.data)
                 toast.error("Username already exists")
+            else
+                toast.error(error.response.data)
         })
 
 

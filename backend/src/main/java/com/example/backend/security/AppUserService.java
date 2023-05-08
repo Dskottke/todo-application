@@ -26,6 +26,8 @@ public class AppUserService {
             throw new UsernameIsTakenException("Username : " + newUser.username() + " is already taken.");
         }
 
+        passwordValidation(newUser.password());
+
         AppUser appUser = new AppUser(
                 utils.getUUID(),
                 newUser.username(),
@@ -38,4 +40,14 @@ public class AppUserService {
         return appUserRepository.findByUsername(username).isPresent();
     }
 
+    private void passwordValidation(String password) {
+        boolean hasUppercase = password.chars().anyMatch(Character::isUpperCase);
+        boolean isLongEnough = password.length() >= 8;
+        boolean hasSpecialChar = password.chars().anyMatch(ch -> !Character.isLetterOrDigit(ch));
+        boolean hasDigit = password.chars().anyMatch(Character::isDigit);
+
+        if (!hasUppercase || !isLongEnough || !hasSpecialChar || !hasDigit) {
+            throw new PasswordValidationException("Password must contain at least 8 characters, one uppercase letter, one digit and one special character.");
+        }
+    }
 }
