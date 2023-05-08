@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/api/user/*").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/user/*").permitAll()
                 .requestMatchers("/api/todo/**").authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)

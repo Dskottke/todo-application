@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -35,5 +36,48 @@ class AppUserIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/me"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("user"));
+    }
+
+    @Test
+    @DirtiesContext
+    @DisplayName("POST - Request , expect HTTP-status 201 and the new user")
+    void createAndExpectHttpStatus201() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/")
+                        .content("""
+                                {
+                                    "username": "user",
+                                    "password": "password"
+                                }
+                                """)
+                        .contentType("application/json"))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("user"));
+    }
+
+    @Test
+    @DirtiesContext
+    @DisplayName("POST - Request , expect HTTP-status 400 and the Username that already exists")
+    void createAndExpectHttpStatus400() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/")
+                        .content("""
+                                {
+                                    "username": "user",
+                                    "password": "password"
+                                }
+                                """)
+                        .contentType("application/json"))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("user"));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/")
+                        .content("""
+                                {
+                                    "username": "user",
+                                    "password": "password"
+                                }
+                                """)
+                        .contentType("application/json"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Username : " + "user" + " is already taken."));
     }
 }

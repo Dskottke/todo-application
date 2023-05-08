@@ -14,14 +14,13 @@ public class AppUserService {
 
     private final PasswordEncoder passwordEncoder;
 
-
     private final Utils utils;
 
     public Optional<AppUser> findByUsername(String username) {
         return appUserRepository.findByUsername(username);
     }
 
-    public AppUser create(NewUser newUser) {
+    public String create(NewUser newUser) {
 
         if (usernameIsTaken(newUser.username())) {
             throw new UsernameIsTakenException("Username : " + newUser.username() + " is already taken.");
@@ -32,7 +31,7 @@ public class AppUserService {
                 newUser.username(),
                 passwordEncoder.encode(newUser.password()));
 
-        return appUserRepository.save(appUser);
+        return appUserRepository.save(appUser).username();
     }
 
     private boolean usernameIsTaken(String username) {
