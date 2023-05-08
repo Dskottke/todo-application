@@ -29,7 +29,7 @@ class ToDoIntegrationTest {
     @DisplayName("GET - Request , expect empty list and HTTP-status 200")
     @WithMockUser(username = "user", password = "password", roles = "USER")
     void getAllTodosAndExpectEmptyList() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/todos"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/todo"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         []
@@ -41,7 +41,7 @@ class ToDoIntegrationTest {
     @DirtiesContext
     @WithMockUser
     void postNewToDoDTOAndExpectStatus201AndToDo() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/todos")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/todo")
                         .contentType("application/json")
                         .content("""
                                 {
@@ -66,7 +66,7 @@ class ToDoIntegrationTest {
     @DisplayName("POST - Request , with null values, expect HTTP-status 400")
     @WithMockUser
     void postNewToDoDTOWithNullValuesExpectBadRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/todos")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/todo")
                         .contentType("application/json")
                         .content("""
                                 {
@@ -81,7 +81,7 @@ class ToDoIntegrationTest {
     @DisplayName("POST - Request , with empty String values, expect HTTP-status 400")
     @WithMockUser
     void postNewToDoDTOWithEmptyStringValuesExpectBadRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/todos")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/todo")
                         .contentType("application/json")
                         .content("""
                                 {
@@ -99,7 +99,7 @@ class ToDoIntegrationTest {
     @DirtiesContext
     @WithMockUser
     void putWithValidIdExpectHttpStatus200AndUpdatedTodo() throws Exception {
-        String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/todos")
+        String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/todo")
                         .contentType("application/json")
                         .content("""
                                 {
@@ -113,7 +113,7 @@ class ToDoIntegrationTest {
 
         ToDo toDo = objectMapper.readValue(result, ToDo.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/todos/" + toDo.id()))
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/todo/" + toDo.id()))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         {
@@ -124,7 +124,6 @@ class ToDoIntegrationTest {
                         """))
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.creationDate").isNotEmpty());
-        ;
     }
 
     @Test
@@ -133,7 +132,7 @@ class ToDoIntegrationTest {
     @WithMockUser
     void putWithInvalidIdExpectHttpStatus404() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/todos/" + "123"))
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/todo/" + "123"))
                 .andExpect(status().is(404))
                 .andExpect(content().string("Could not find todo 123"));
     }
@@ -144,7 +143,7 @@ class ToDoIntegrationTest {
     @WithMockUser
     void putWithStatusDoneExpectHttpStatus400() throws Exception {
 
-        String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/todos")
+        String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/todo")
                         .contentType("application/json")
                         .content("""
                                 {
@@ -158,7 +157,7 @@ class ToDoIntegrationTest {
 
         ToDo toDo = objectMapper.readValue(result, ToDo.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/todos/" + toDo.id()))
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/todo/" + toDo.id()))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         {
@@ -170,7 +169,7 @@ class ToDoIntegrationTest {
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.creationDate").isNotEmpty());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/todos/" + toDo.id()))
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/todo/" + toDo.id()))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         {
@@ -182,7 +181,7 @@ class ToDoIntegrationTest {
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.creationDate").isNotEmpty());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/todos/" + toDo.id()))
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/todo/" + toDo.id()))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("invalid status"));
 
@@ -195,7 +194,7 @@ class ToDoIntegrationTest {
     @WithMockUser
     void deleteWithValidIdExpectHttpStatus200() throws Exception {
 
-        String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/todos")
+        String result = mockMvc.perform(MockMvcRequestBuilders.post("/api/todo")
                         .contentType("application/json")
                         .content("""
                                 {
@@ -209,7 +208,7 @@ class ToDoIntegrationTest {
 
         ToDo toDo = objectMapper.readValue(result, ToDo.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/todos/" + toDo.id()))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/todo/" + toDo.id()))
                 .andExpect(status().isNoContent());
     }
 
@@ -218,7 +217,7 @@ class ToDoIntegrationTest {
     @WithMockUser
     void deleteWithInvalidIdExpectHttpStatus404() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/todos/" + "123"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/todo/" + "123"))
                 .andExpect(status().is(404))
                 .andExpect(content().string("Could not find todo 123"));
     }
@@ -226,7 +225,7 @@ class ToDoIntegrationTest {
     @Test
     @DisplayName("GET - Request - without MockUser, expect HTTP-status 401")
     void getWithoutMockUserExpectHttpStatus401() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/todos"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/todo"))
                 .andExpect(status().isUnauthorized());
     }
 }

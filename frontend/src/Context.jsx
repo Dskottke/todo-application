@@ -11,7 +11,6 @@ const AppContext = ({children}) => {
     const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [toDos, setToDos] = useState({})
-
     const fetchUser = (credentials) => {
 
         axios.get("/api/user/", {
@@ -24,10 +23,13 @@ const AppContext = ({children}) => {
                 if (response.status === 200) {
                     navigate("/")
                 }
-            })
-            .catch((error) => {
-                toast.error(error.message)
-            })
+
+            }).catch((error) => {
+            if (error.response.status === 401)
+                toast.error("Wrong username or password")
+        })
+
+
     }
 
     const openAmount = useMemo(() => {
