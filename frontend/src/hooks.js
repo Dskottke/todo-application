@@ -35,7 +35,7 @@ export const useAddToDo = () => {
             queryClient.invalidateQueries({queryKey: ['todos']})
             toast.success("New todo added!")
         }, onError: (error) => {
-            toast.error(error.message)
+            toast.error(error.response.data)
         }
 
     })

@@ -23,7 +23,7 @@ class AppUserIntegrationTest {
     @DisplayName("GET - Request , expect HTTP-status 200 and the new ToDo")
     @WithMockUser()
     void validLogin() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/user"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("hello user"));
     }
