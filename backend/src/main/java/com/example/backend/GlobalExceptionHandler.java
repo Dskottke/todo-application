@@ -1,5 +1,6 @@
 package com.example.backend;
 
+import com.example.backend.security.UsernameIsTakenException;
 import com.example.backend.todos.ToDoNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({
             IllegalArgumentException.class,
             IllegalStateException.class,
+            UsernameIsTakenException.class,
     })
     public ResponseEntity<Object> handleBadRequestException(RuntimeException e, WebRequest request) {
         return handleExceptionInternal(e, e.getMessage(),

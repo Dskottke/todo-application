@@ -49,13 +49,13 @@ class AppUserServiceTest {
                         newUser.username(),
                         encodedPassword)))
                 .thenReturn(expected);
-        AppUser actual = appUserService.create(newUser);
+        String actual = appUserService.create(newUser);
         //THEN
         verify(utils).getUUID();
         verify(passwordEncoder).encode(newUser.password());
         verify(appUserRepository).save(
                 expected);
-        assertEquals(expected, actual);
+        assertEquals(expected.username(), actual);
     }
 
     @Test
