@@ -1,4 +1,4 @@
-package com.example.backend.security;
+package com.example.backend.security.exceptions;
 
 public class UsernameIsTakenException extends RuntimeException {
     public UsernameIsTakenException(String message) {

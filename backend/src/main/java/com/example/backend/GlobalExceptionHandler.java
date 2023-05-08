@@ -1,8 +1,8 @@
 package com.example.backend;
 
-import com.example.backend.security.PasswordValidationException;
-import com.example.backend.security.UsernameIsTakenException;
-import com.example.backend.todos.ToDoNotFoundException;
+import com.example.backend.security.exceptions.PasswordValidationException;
+import com.example.backend.security.exceptions.UsernameIsTakenException;
+import com.example.backend.todos.exceptions.ToDoNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
