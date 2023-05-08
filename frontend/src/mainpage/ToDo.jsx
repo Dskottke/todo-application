@@ -19,9 +19,8 @@ function ToDo({id, title, description, status, creationDate, dueDate}) {
 
     return (
         <article className={"todo-container"}>
-            <div className={"todo-header"}>
-                <div style={{borderBottomColor: color}} className={"triangle"}></div>
-                <h1>{title}</h1>
+            <div style={{backgroundColor: color}} className={"todo-header"}>
+                <h1 className={"todo-title"}>{title}</h1>
 
             </div>
 

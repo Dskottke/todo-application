@@ -39,7 +39,7 @@ public class ToDoService {
     }
 
     private boolean checkFieldsAreEmpty(NewToDo newToDo) {
-        return newToDo.title().isEmpty() && newToDo.description().isEmpty();
+        return newToDo.title().isEmpty() || newToDo.description().isEmpty();
     }
 
     public ToDo updateStatusById(String id) {
