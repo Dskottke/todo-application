@@ -1,5 +1,5 @@
 import {createContext, useContext, useMemo, useState} from "react";
-import {DONE, IN_PROGRESS, OPEN} from "./Constants.js";
+import {DONE, IN_PROGRESS, OPEN} from "./Data.js";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
@@ -30,9 +30,24 @@ const AppContext = ({children}) => {
             if (error.response.status === 401)
                 toast.error("Wrong username or password")
         })
+    }
+    const signUpUser = (credentials) => {
+        axios.post("/api/user/", {
+            username: credentials.username,
+            password: credentials.password
+        }).then((response) => {
+            if (response.status === 201) {
+                toast.success("user  " + response.data + " created , you can login now")
+                navigate("/login")
+            }
+        }).catch((error) => {
+            if (error.response.status === 400)
+                toast.error("Username already exists")
+        })
 
 
     }
+
     const getCurrentUser = useMemo(() => {
         return currentUser
     }, [currentUser])
@@ -68,7 +83,8 @@ const AppContext = ({children}) => {
             doneAmount,
             fetchUser,
             setCurrentUser,
-            getCurrentUser
+            getCurrentUser,
+            signUpUser
         }
     }, [isModalOpen, toDos])
 
@@ -79,4 +95,5 @@ const AppContext = ({children}) => {
     );
 
 }
+
 export default AppContext

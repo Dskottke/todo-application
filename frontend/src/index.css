@@ -461,9 +461,9 @@ h4 {
     font-variant-caps: all-petite-caps;
 }
 
-/* ----LoginPage----*/
+/* ----Login/Signup Pages----*/
 
-.login-page {
+.page {
     display: grid;
     place-items: center;
     position: absolute;
@@ -472,7 +472,7 @@ h4 {
     background-color: #2f5c74;
 }
 
-.login-mask {
+.login-signup-mask {
     border-radius: 10px;
     display: grid;
     gap: 1rem;
@@ -482,13 +482,13 @@ h4 {
     box-shadow: var(--shadow-3);
 }
 
-.login-mask .form-header {
+.login-signup-mask .form-header {
     margin-top: 2rem;
     display: grid;
     justify-content: center;
 }
 
-.login-mask .form-row {
+.login-signup-mask .form-row {
     display: grid;
     gap: 1em;
 }
@@ -500,6 +500,8 @@ h4 {
     margin-top: 3rem;
     margin-bottom: 1rem;
 }
+
+
 
 
 
