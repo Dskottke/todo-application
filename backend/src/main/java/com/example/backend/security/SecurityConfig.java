@@ -29,10 +29,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/api/user/*").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/user/*").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/user/logout").authenticated()
                 .requestMatchers("/api/todo/**").authenticated()
+                .requestMatchers("/api/user/logout").authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .and()
+                .logout().logoutUrl("/api/user/logout").logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpStatus.OK.value()))
                 .and()
                 .build();
     }
