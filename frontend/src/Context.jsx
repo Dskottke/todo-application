@@ -12,7 +12,22 @@ const AppContext = ({children}) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [toDos, setToDos] = useState({})
     const [currentUser, setCurrentUser] = useState(null)
+    const [isSideBarOpen, setIsSideBarOpen] = useState(false)
 
+
+    const logoutUser = () => {
+        axios.get("/api/user/logout")
+            .then((response) => {
+                    if (response.status === 200) {
+                        toast.success("Logged out")
+                        setCurrentUser(null)
+                        setIsSideBarOpen(false)
+                        navigate("/login")
+                    }
+                }
+            )
+
+    }
     const fetchUser = (credentials) => {
 
         axios.get("/api/user/", {
@@ -72,6 +87,12 @@ const AppContext = ({children}) => {
     const closeModal = () => {
         setIsModalOpen(false)
     }
+    const openSideBar = () => {
+        setIsSideBarOpen(true)
+    }
+    const closeSideBar = () => {
+        setIsSideBarOpen(false)
+    }
 
     const value = useMemo(() => {
         return {
@@ -86,9 +107,13 @@ const AppContext = ({children}) => {
             fetchUser,
             setCurrentUser,
             getCurrentUser,
-            signUpUser
+            signUpUser,
+            logoutUser,
+            openSideBar,
+            closeSideBar,
+            isSideBarOpen
         }
-    }, [isModalOpen, toDos])
+    }, [isModalOpen, toDos, isSideBarOpen])
 
     return (
         <GlobalContext.Provider value={value}>
