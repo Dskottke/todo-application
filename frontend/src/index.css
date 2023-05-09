@@ -14,7 +14,7 @@ html {
     /* colors */
     --primary-100: #60a4c7;
     --primary-200: #71aecd;
-    --primary-300: #83b8d4;
+    --primary-300: rgba(131, 184, 212, 0.81);
     --primary-400: #95c2da;
     --primary-500: #a7cde0;
     --primary-600: #b8d7e6;
@@ -140,9 +140,18 @@ h4 {
 
 .nav-btn {
     font-size: 12px;
+    color: var(--primary-300);
+    background-color: rgba(182, 181, 181, 0.27);
+
     letter-spacing: 0;
     padding: 0.1rem 0.1rem;
     visibility: visible;
+}
+
+.nav-btn:hover {
+    background-color: var(--primary-100);
+    color: white;
+    border: none;
 }
 
 .nav-user {
@@ -193,6 +202,7 @@ h4 {
     min-height: 2rem;
     line-height: 2rem;
     border-radius: 50%;
+    border: groove 1px var(--primary-300);
     background-color: rgba(182, 181, 181, 0.27);
     font-size: 15px;
     color: var(--primary-300);
@@ -254,7 +264,7 @@ h4 {
     width: 80%;
     margin-top: 1rem;
     margin-left: 2rem;
-
+    box-shadow: var(--shadow-1);
 }
 
 .show-sidebar {
@@ -274,7 +284,13 @@ h4 {
     right: 0.1rem;
     padding: 0;
     width: 2rem;
-    font-size: 1rem
+    font-size: 1rem;
+    background-color: var(--grey-100);
+}
+
+.sidebar-btn:hover {
+    background-color: var(--primary-300);
+
 }
 
 .sidebar-todos {
@@ -345,10 +361,12 @@ h4 {
     width: 300px;
     height: 40px;
     border: 0;
+    background-color: rgba(255, 255, 255, 0.73);
     font-size: large;
     color: var(--grey-600);
     letter-spacing: 1px;
     transition: var(--transition);
+    box-shadow: var(--shadow-3);
 }
 
 .hero-btn:hover {
@@ -356,6 +374,7 @@ h4 {
     background-color: transparent;
     transition: var(--transition);
     color: white;
+    box-shadow: none;
 }
 
 @media screen and (max-width: 770px) {
@@ -440,6 +459,21 @@ h4 {
     0 2px 4px -2px rgba(0, 0, 0, .1);
 }
 
+.urgency-field {
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    background-color: #1f3e4d;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    border: groove 1px #e5e5e5;
+    box-shadow: var(--shadow-1);
+}
+
 .todo-header {
     position: relative;
     background-clip: border-box;
@@ -447,12 +481,13 @@ h4 {
     margin-left: 1rem;
     margin-right: 1rem;
     border-radius: 0.75rem;
-    background-color: rgb(33 150 243);
+    background: #7595a8;
     box-shadow: 0 10px 15px -3px rgba(146, 148, 148, 0.4), 0 4px 6px -4px rgba(98, 100, 100, 0.4);
     height: 4rem;
 }
 
 .todo-title {
+    color: var(--white);
     margin-top: 0.5rem;
     text-align: center;
     font-size: 20px;

@@ -19,11 +19,10 @@ function ToDo({id, title, description, status, creationDate, dueDate}) {
 
     return (
         <article className={"todo-container"}>
-            <div style={{backgroundColor: color}} className={"todo-header"}>
+            <div className={"todo-header"}>
                 <h1 className={"todo-title"}>{title}</h1>
-
+                <div style={{backgroundColor: color}} className={"urgency-field"}/>
             </div>
-
             <div className={"todo-info"}>
                 <p><span>{description}</span></p>
             </div>
@@ -39,7 +38,6 @@ function ToDo({id, title, description, status, creationDate, dueDate}) {
                             type={"button"}>advance</button> : null}
                 <button onClick={onDeleteClick} className={"todo-btn"} type={"button"}>delete</button>
             </div>
-
         </article>
     );
 }

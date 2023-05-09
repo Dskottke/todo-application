@@ -17,10 +17,11 @@ function SideBar() {
                     <h1><span>ToDo</span>-list</h1>
                 </div>
             </section>
+            <div className={"head_underline"}></div>
             <section className={"sidebar-todos"}>
                 <p>open:<span className={"status-counter"}>{openAmount}</span></p>
                 <p>in-progress:<span className={"status-counter"}>{inProgressAmount}</span></p>
-                <p>done: <span className={"status-counter"}>{doneAmount}</span></p>
+                <p>done:<span className={"status-counter"}>{doneAmount}</span></p>
             </section>
             <div className={"head_underline"}></div>
             <section className={"sidebar-user"}>
