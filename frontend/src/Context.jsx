@@ -14,7 +14,6 @@ const AppContext = ({children}) => {
     const [currentUser, setCurrentUser] = useState(null)
     const [isSideBarOpen, setIsSideBarOpen] = useState(false)
 
-
     const logoutUser = () => {
         axios.get("/api/user/logout")
             .then((response) => {
@@ -42,8 +41,7 @@ const AppContext = ({children}) => {
                 }
 
             }).catch((error) => {
-            if (error.response.status === 401)
-                toast.error("Wrong username or password")
+                toast.error(error.response.data.message)
         })
     }
     const signUpUser = (credentials) => {

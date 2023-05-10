@@ -1,5 +1,6 @@
 package com.example.backend.security;
 
+import com.example.backend.security.exceptions.UserIsNotConfirmedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Optional;
@@ -21,10 +23,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf()
+        return http
+                .csrf()
                 .disable()
                 .httpBasic()
-                .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase()))
+                .authenticationEntryPoint(authenticationEntryPoint())
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/api/user/*").permitAll()
@@ -37,6 +40,12 @@ public class SecurityConfig {
                 .logout().logoutUrl("/api/user/logout").logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpStatus.OK.value()))
                 .and()
                 .build();
+
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return new CustomAuthenticationEntryPoint();
     }
 
 
@@ -48,10 +57,13 @@ public class SecurityConfig {
             if (user.isEmpty()) {
                 throw new UsernameNotFoundException(username);
             }
+            if (!user.get().confirmed()) {
+                throw new UserIsNotConfirmedException("User is not confirmed");
+            }
 
             AppUser appUser = user.get();
 
-            return User.builder().username(appUser.username()).password(appUser.password()).roles("USER").build();
+            return User.builder().username(appUser.username()).password(appUser.password()).roles(appUser.role().toString()).build();
         };
 
 

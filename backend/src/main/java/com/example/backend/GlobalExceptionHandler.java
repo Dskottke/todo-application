@@ -20,13 +20,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             IllegalStateException.class,
             UsernameIsTakenException.class,
             PasswordValidationException.class,
+
     })
     public ResponseEntity<Object> handleBadRequestException(RuntimeException e, WebRequest request) {
         return handleExceptionInternal(e, e.getMessage(),
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 
     }
-
     @ExceptionHandler({
             ToDoNotFoundException.class,
     })
@@ -34,6 +34,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(e, e.getMessage(),
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
-
 
 }

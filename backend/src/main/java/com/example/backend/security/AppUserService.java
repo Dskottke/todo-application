@@ -33,7 +33,9 @@ public class AppUserService {
         AppUser appUser = new AppUser(
                 utils.getUUID(),
                 newUser.username(),
-                passwordEncoder.encode(newUser.password()));
+                passwordEncoder.encode(newUser.password()),
+                Role.USER,
+                false);
 
         return appUserRepository.save(appUser).username();
     }

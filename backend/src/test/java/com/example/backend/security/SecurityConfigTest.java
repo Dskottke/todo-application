@@ -28,8 +28,9 @@ class SecurityConfigTest {
                         new AppUser(
                                 "1",
                                 "user",
-                                "password"))
-        );
+                                "password",
+                                Role.USER,
+                                true)));
         User actual = (User) userDetailsService.loadUserByUsername("user");
         //THEN
         verify(appUserService).findByUsername("user");
