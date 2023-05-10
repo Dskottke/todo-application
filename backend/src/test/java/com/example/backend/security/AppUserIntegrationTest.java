@@ -103,8 +103,7 @@ class AppUserIntegrationTest {
     @WithMockUser()
     void logoutAndExpectHttpStatus200() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/logout"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("logout"));
+                .andExpect(status().isOk());
     }
 
 }

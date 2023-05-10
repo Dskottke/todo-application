@@ -28,7 +28,7 @@ class AppUserServiceTest {
         //GIVEN
         String username = "user";
         //WHEN
-        Optional<AppUser> expected = Optional.of(new AppUser("1", username, "password"));
+        Optional<AppUser> expected = Optional.of(new AppUser("1", username, "password", Role.USER, false));
         when(appUserRepository.findByUsername(username)).thenReturn(expected);
         Optional<AppUser> actual = appUserService.findByUsername("user");
         //THEN
@@ -43,7 +43,7 @@ class AppUserServiceTest {
         NewUser newUser = new NewUser("user", "passWord1!");
         String uuid = "1";
         String encodedPassword = "123";
-        AppUser expected = new AppUser(uuid, newUser.username(), encodedPassword);
+        AppUser expected = new AppUser(uuid, newUser.username(), encodedPassword, Role.USER, false);
         //WHEN
         when(utils.getUUID()).thenReturn(uuid);
         when(passwordEncoder.encode(newUser.password())).thenReturn(encodedPassword);
@@ -51,7 +51,9 @@ class AppUserServiceTest {
                 new AppUser(
                         uuid,
                         newUser.username(),
-                        encodedPassword)))
+                        encodedPassword,
+                        Role.USER,
+                        false)))
                 .thenReturn(expected);
         String actual = appUserService.create(newUser);
         //THEN
@@ -68,7 +70,7 @@ class AppUserServiceTest {
         //GIVEN
         NewUser newUser = new NewUser("user", "password");
         //WHEN
-        when(appUserRepository.findByUsername(newUser.username())).thenReturn(Optional.of(new AppUser("1", "user", "password")));
+        when(appUserRepository.findByUsername(newUser.username())).thenReturn(Optional.of(new AppUser("1", "user", "password", Role.USER, false)));
         //THEN
         UsernameIsTakenException exception = assertThrows(UsernameIsTakenException.class, () -> appUserService.create(newUser));
         assertEquals("Username : " + newUser.username() + " is already taken.", exception.getMessage());
