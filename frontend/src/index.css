@@ -476,7 +476,6 @@ h4 {
 
 .todo-header {
     position: relative;
-    background-clip: border-box;
     margin-top: 1.5rem;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -662,6 +661,51 @@ h4 {
     gap: 1em;
 }
 
+/*---admin-overview---*/
+.admin-overview-container {
+    margin: 1rem 20% 1rem 20%;
+    background-color: var(--primary-600);
+}
+
+.unconfirmed-table {
+    display: grid;
+    place-items: center;
+    margin-top: 2rem;
+}
+
+.unconfirmed-table h1 {
+    text-align: center;
+    margin-top: 1rem;
+    letter-spacing: 0.1em
+}
+
+.unconfirmed-table table {
+    margin-top: 2rem;
+    border-collapse: collapse;
+    width: 80%;
+    margin-bottom: 2rem;
+}
+
+.unconfirmed-table th, td {
+    padding: 0.25rem;
+    text-align: center;
+    border: 1px solid #fdfdfd;
+}
+
+.unconfirmed-table th {
+    background: #1f3e4d;
+    color: white;
+}
+
+.unconfirmed-table tbody tr:nth-child(odd) {
+    background: #eee;
+}
+
+.user-card-action {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
 
 
 

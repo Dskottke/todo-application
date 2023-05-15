@@ -13,6 +13,8 @@ const AppContext = ({children}) => {
     const [toDos, setToDos] = useState({})
     const [currentUser, setCurrentUser] = useState(null)
     const [isSideBarOpen, setIsSideBarOpen] = useState(false)
+    const [unconfirmedUsers, setUnconfirmedUsers] = useState([])
+
 
     const logoutUser = () => {
         axios.get("/api/user/logout")
@@ -24,8 +26,9 @@ const AppContext = ({children}) => {
                         navigate("/login")
                     }
                 }
-            )
-
+            ).catch((error) => {
+            toast.error(error.response.data)
+        })
     }
     const fetchUser = (credentials) => {
 
@@ -41,7 +44,7 @@ const AppContext = ({children}) => {
                 }
 
             }).catch((error) => {
-                toast.error(error.response.data)
+            toast.error(error.response.data)
         })
     }
     const signUpUser = (credentials) => {
@@ -109,7 +112,9 @@ const AppContext = ({children}) => {
             logoutUser,
             openSideBar,
             closeSideBar,
-            isSideBarOpen
+            isSideBarOpen,
+            unconfirmedUsers,
+            setUnconfirmedUsers
         }
     }, [isModalOpen, toDos, isSideBarOpen])
 

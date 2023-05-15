@@ -118,3 +118,13 @@ export const useAuth = () => {
     return user;
 
 }
+export const useUnconfirmedUsers = () => {
+    const {setUnconfirmedUsers} = useGlobalContext()
+    useEffect(() => {
+        axios.get("/api/user/confirm/list")
+            .then((response) => {
+                setUnconfirmedUsers(response.data)
+            })
+    }, [])
+
+}
