@@ -42,4 +42,15 @@ public class AppUserController {
     public List<AppUser> confirmList() {
         return appUserService.confirmList();
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        appUserService.delete(id);
+    }
+
+    @PutMapping("/confirm/{id}")
+    public void confirm(@PathVariable String id) {
+        appUserService.confirmUser(id);
+    }
 }
