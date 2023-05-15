@@ -1,9 +1,13 @@
 package com.example.backend.security;
 
+import com.example.backend.security.models.ConfirmUser;
+import com.example.backend.security.models.NewUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -32,5 +36,10 @@ public class AppUserController {
     public String logout() {
         SecurityContextHolder.clearContext();
         return "logout";
+    }
+
+    @GetMapping("/confirm/list")
+    public List<ConfirmUser> confirmList() {
+        return appUserService.confirmList();
     }
 }

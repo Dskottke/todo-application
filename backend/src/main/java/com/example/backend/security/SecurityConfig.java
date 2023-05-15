@@ -1,6 +1,7 @@
 package com.example.backend.security;
 
 import com.example.backend.security.exceptions.UserIsNotConfirmedException;
+import com.example.backend.security.models.AppUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/api/user/*").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/user/*").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/user/confirm/list").hasRole("ADMIN")
                 .requestMatchers("/api/todo/**").authenticated()
                 .requestMatchers("/api/user/logout").authenticated()
                 .and()

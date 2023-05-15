@@ -3,10 +3,14 @@ package com.example.backend.security;
 import com.example.backend.Utils;
 import com.example.backend.security.exceptions.PasswordValidationException;
 import com.example.backend.security.exceptions.UsernameIsTakenException;
+import com.example.backend.security.models.AppUser;
+import com.example.backend.security.models.ConfirmUser;
+import com.example.backend.security.models.NewUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,5 +57,10 @@ public class AppUserService {
         if (!hasUppercase || !isLongEnough || !hasSpecialChar || !hasDigit) {
             throw new PasswordValidationException("Password must contain at least 8 characters, one uppercase letter, one digit and one special character.");
         }
+    }
+
+    public List<ConfirmUser> confirmList() {
+        List<AppUser> unconfirmedAppUsers = appUserRepository.getAllUsersByConfirmedIsFalse();
+        return List.of(unconfirmedAppUsers.stream().map(appUser -> new ConfirmUser(appUser.id(), appUser.username(), appUser.role())).toArray(ConfirmUser[]::new));
     }
 }

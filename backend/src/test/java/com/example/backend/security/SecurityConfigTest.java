@@ -1,5 +1,6 @@
 package com.example.backend.security;
 
+import com.example.backend.security.models.AppUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;

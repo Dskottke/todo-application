@@ -3,6 +3,8 @@ package com.example.backend.security;
 import com.example.backend.Utils;
 import com.example.backend.security.exceptions.PasswordValidationException;
 import com.example.backend.security.exceptions.UsernameIsTakenException;
+import com.example.backend.security.models.AppUser;
+import com.example.backend.security.models.NewUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
