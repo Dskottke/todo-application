@@ -15,18 +15,21 @@ const AppContext = ({children}) => {
     const [isSideBarOpen, setIsSideBarOpen] = useState(false)
     const [unconfirmedUsers, setUnconfirmedUsers] = useState([])
 
+    const navigateTo = (path) => {
+        navigate(path)
+        closeSideBar()
+    }
 
     const logoutUser = () => {
         axios.get("/api/user/logout")
             .then((response) => {
-                    if (response.status === 200) {
-                        toast.success("Logged out")
-                        setCurrentUser(null)
-                        setIsSideBarOpen(false)
-                        navigate("/login")
-                    }
+                if (response.status === 200) {
+                    toast.success("Logged out")
+                    setCurrentUser(null)
+                    setIsSideBarOpen(false)
+                    navigate("/login")
                 }
-            ).catch((error) => {
+            }).catch((error) => {
             toast.error(error.response.data)
         })
     }
@@ -34,8 +37,7 @@ const AppContext = ({children}) => {
 
         axios.get("/api/user/", {
             auth: {
-                username: credentials.username,
-                password: credentials.password
+                username: credentials.username, password: credentials.password
             }
         })
             .then((response) => {
@@ -49,25 +51,21 @@ const AppContext = ({children}) => {
     }
     const signUpUser = (credentials) => {
         axios.post("/api/user/", {
-            username: credentials.username,
-            password: credentials.password
+            username: credentials.username, password: credentials.password
         }).then((response) => {
             if (response.status === 201) {
                 toast.success("user  " + response.data + " created , you can login now")
                 navigate("/login")
             }
         }).catch((error) => {
-            if (error.response.status === 400 && !error.response.data)
-                toast.error("Username already exists")
-            else
-                toast.error(error.response.data)
+            if (error.response.status === 400 && !error.response.data) toast.error("Username already exists")
+            else toast.error(error.response.data)
         })
 
 
     }
-
     const getCurrentUser = useMemo(() => {
-        return currentUser.username
+        return currentUser
     }, [currentUser])
 
     const openAmount = useMemo(() => {
@@ -114,15 +112,14 @@ const AppContext = ({children}) => {
             closeSideBar,
             isSideBarOpen,
             unconfirmedUsers,
-            setUnconfirmedUsers
+            setUnconfirmedUsers,
+            navigateTo,
         }
     }, [isModalOpen, toDos, isSideBarOpen])
 
-    return (
-        <GlobalContext.Provider value={value}>
-            {children}
-        </GlobalContext.Provider>
-    );
+    return (<GlobalContext.Provider value={value}>
+        {children}
+    </GlobalContext.Provider>);
 
 }
 
