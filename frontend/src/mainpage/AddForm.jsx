@@ -3,11 +3,11 @@ import {useGlobalContext} from "../Context.jsx";
 import {useAddToDo} from "../hooks.js";
 import {minDate} from "../Data.js";
 
-function AddForm(props) {
+function AddForm() {
 
     const {closeModal} = useGlobalContext()
 
-    const {createTask, isLoading} = useAddToDo()
+    const {mutate: createTask, isLoading} = useAddToDo()
 
     const onFormSubmit = (e) => {
         e.preventDefault()
