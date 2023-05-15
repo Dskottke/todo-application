@@ -4,7 +4,6 @@ import com.example.backend.Utils;
 import com.example.backend.security.exceptions.PasswordValidationException;
 import com.example.backend.security.exceptions.UsernameIsTakenException;
 import com.example.backend.security.models.AppUser;
-import com.example.backend.security.models.ConfirmUser;
 import com.example.backend.security.models.NewUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -63,9 +62,8 @@ public class AppUserService {
         }
     }
 
-    public List<ConfirmUser> confirmList() {
-        List<AppUser> unconfirmedAppUsers = appUserRepository.getAllUsersByConfirmedIsFalse();
-        return List.of(unconfirmedAppUsers.stream().map(appUser -> new ConfirmUser(appUser.id(), appUser.username(), appUser.role())).toArray(ConfirmUser[]::new));
+    public List<AppUser> confirmList() {
+        return appUserRepository.getAllUsersByConfirmedIsFalse();
     }
 
     public AppUser getCurrentUser() {
