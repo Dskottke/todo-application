@@ -11,7 +11,7 @@ const AppContext = ({children}) => {
     const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [toDos, setToDos] = useState({})
-    const [currentUser, setCurrentUser] = useState(null)
+    const [currentUser, setCurrentUser] = useState({})
     const [isSideBarOpen, setIsSideBarOpen] = useState(false)
     const [unconfirmedUsers, setUnconfirmedUsers] = useState([])
 
@@ -67,7 +67,7 @@ const AppContext = ({children}) => {
     }
 
     const getCurrentUser = useMemo(() => {
-        return currentUser
+        return currentUser.username
     }, [currentUser])
 
     const openAmount = useMemo(() => {

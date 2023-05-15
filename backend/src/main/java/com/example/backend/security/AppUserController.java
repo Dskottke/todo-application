@@ -1,5 +1,6 @@
 package com.example.backend.security;
 
+import com.example.backend.security.models.AppUser;
 import com.example.backend.security.models.ConfirmUser;
 import com.example.backend.security.models.NewUser;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public class AppUserController {
     }
 
     @GetMapping("/me")
-    public String me() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+    public AppUser me() {
+        return appUserService.getCurrentUser();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
