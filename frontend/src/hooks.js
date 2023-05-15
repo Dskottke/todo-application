@@ -22,6 +22,18 @@ export const useFetchToDos = () => {
     })
     return {isSuccess, isLoading, data, error}
 }
+export const useUnconfirmedUsersFetch = () => {
+    const {data, isLoading, isError, isSuccess} = useQuery({
+        queryKey: ['unconfirmedUsers'], queryFn: () => fetch.customUserFetch.get("confirm/list"),
+        onSuccess: (data) => {
+            console.log(data.data)
+        },
+        onError: (error) => {
+            console.log(error)
+        }
+    })
+    return {data, isLoading, isError, isSuccess}
+}
 
 export const useAddToDo = () => {
     const queryClient = useQueryClient()
@@ -35,7 +47,7 @@ export const useAddToDo = () => {
             toast.error(error.response.data)
         }
     })
-    return {createTask, isLoading}
+    return {mutate: createTask, isLoading}
 }
 
 export const useAdvanceToDo = () => {
@@ -111,15 +123,5 @@ export const useAuth = () => {
     }, [navigate]);
 
     return user;
-
-}
-export const useUnconfirmedUsers = () => {
-    const {setUnconfirmedUsers} = useGlobalContext()
-    useEffect(() => {
-        axios.get("/api/user/confirm/list")
-            .then((response) => {
-                setUnconfirmedUsers(response.data)
-            })
-    }, [])
 
 }
