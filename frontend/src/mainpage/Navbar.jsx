@@ -11,7 +11,7 @@ function Navbar() {
         logoutUser,
         openSideBar,
     } = useGlobalContext()
-
+    console.log(getCurrentUser)
 
     return (
         <nav className={"nav-container"}>

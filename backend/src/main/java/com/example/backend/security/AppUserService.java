@@ -7,11 +7,15 @@ import com.example.backend.security.models.AppUser;
 import com.example.backend.security.models.ConfirmUser;
 import com.example.backend.security.models.NewUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -62,5 +66,29 @@ public class AppUserService {
     public List<ConfirmUser> confirmList() {
         List<AppUser> unconfirmedAppUsers = appUserRepository.getAllUsersByConfirmedIsFalse();
         return List.of(unconfirmedAppUsers.stream().map(appUser -> new ConfirmUser(appUser.id(), appUser.username(), appUser.role())).toArray(ConfirmUser[]::new));
+    }
+
+    public AppUser getCurrentUser() {
+        Set<String> roles = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+
+        if (roles.contains("ROLE_ADMIN")) {
+            return AppUser.builder()
+                    .username(
+                            SecurityContextHolder.getContext().getAuthentication().getName())
+                    .role(Role.ADMIN)
+                    .confirmed(true).build();
+        } else {
+            return AppUser.builder()
+                    .username(
+                            SecurityContextHolder.getContext().getAuthentication().getName())
+                    .role(Role.USER)
+                    .confirmed(true).build();
+        }
+
     }
 }

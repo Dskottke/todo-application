@@ -103,7 +103,7 @@ export const useAuth = () => {
 
     useEffect(() => {
         axios.get("/api/user/me").then(res => {
-            if (res.data === "anonymousUser") {
+            if (res.data.username === "anonymousUser") {
                 navigate("/login");
             }
             setCurrentUser(res.data);
