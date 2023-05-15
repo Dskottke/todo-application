@@ -9,7 +9,10 @@ function SideBar() {
         doneAmount,
         getCurrentUser,
         logoutUser,
+        navigateTo
     } = useGlobalContext()
+
+
     return (
         <aside className={isSideBarOpen ? "sidebar-container  show-sidebar" : "sidebar-container "}>
             <section className={"sidebar-header"}>
@@ -25,8 +28,16 @@ function SideBar() {
             </section>
             <div className={"head_underline"}></div>
             <section className={"sidebar-user"}>
-                <p className={"sidebar-user"}>Logged in as: <span>{getCurrentUser}</span></p>
+                <p className={"sidebar-user"}>Logged in as: <span>{getCurrentUser.username}</span></p>
                 <button onClick={logoutUser} className={"btn logout-btn"}>Logout</button>
+                {getCurrentUser.role === "ADMIN" && window.location.pathname === "/" ?
+                    <button onClick={() => navigateTo("/admin")} className={"btn logout-btn"}>Admin</button>
+                    : null
+                }
+                {window.location.pathname === "/admin" ?
+                    <button onClick={() => navigateTo("/")} className={"btn logout-btn"}>Main</button>
+                    : null
+                }
             </section>
             <button onClick={closeSideBar} className={"btn sidebar-btn"}><AiOutlineCloseCircle/></button>
             <div className={"head_underline"}></div>
