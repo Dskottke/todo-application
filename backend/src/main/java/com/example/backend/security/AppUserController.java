@@ -1,7 +1,6 @@
 package com.example.backend.security;
 
 import com.example.backend.security.models.AppUser;
-import com.example.backend.security.models.ConfirmUser;
 import com.example.backend.security.models.NewUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,7 +39,7 @@ public class AppUserController {
     }
 
     @GetMapping("/confirm/list")
-    public List<ConfirmUser> confirmList() {
+    public List<AppUser> confirmList() {
         return appUserService.confirmList();
     }
 }
