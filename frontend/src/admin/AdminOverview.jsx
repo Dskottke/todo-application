@@ -4,7 +4,7 @@ import {useGlobalContext} from "../Context.jsx";
 import SideBar from "../mainpage/SideBar.jsx";
 
 function AdminOverview() {
-    const {getCurrentUser} = useGlobalContext()
+   const {getCurrentUser} = useGlobalContext()
 
     if (getCurrentUser.role !== "ADMIN") {
         return <h1>Not Authorized</h1>

@@ -1,6 +1,6 @@
 import {createContext, useContext, useMemo, useState} from "react";
 import {DONE, IN_PROGRESS, OPEN} from "./Data.js";
-import axios from "axios";
+import fetch from "./customFetches.js";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 
@@ -21,7 +21,7 @@ const AppContext = ({children}) => {
     }
 
     const logoutUser = () => {
-        axios.get("/api/user/logout")
+        fetch.customUserFetch.get("/logout")
             .then((response) => {
                 if (response.status === 200) {
                     toast.success("Logged out")
@@ -34,8 +34,7 @@ const AppContext = ({children}) => {
         })
     }
     const fetchUser = (credentials) => {
-
-        axios.get("/api/user/", {
+        fetch.customUserFetch.get("/", {
             auth: {
                 username: credentials.username, password: credentials.password
             }
@@ -50,7 +49,7 @@ const AppContext = ({children}) => {
         })
     }
     const signUpUser = (credentials) => {
-        axios.post("/api/user/", {
+        fetch.customUserFetch.post("/", {
             username: credentials.username, password: credentials.password
         }).then((response) => {
             if (response.status === 201) {

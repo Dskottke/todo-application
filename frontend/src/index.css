@@ -133,10 +133,6 @@ h4 {
     place-items: center;
 }
 
-.nav-container.hide {
-    visibility: hidden;
-}
-
 .nav-menu-btn {
     visibility: hidden;
 
@@ -420,7 +416,7 @@ h4 {
     font-weight: normal;
     font-variant-caps: all-petite-caps;
     letter-spacing: var(--letterSpacing);
-    text-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    text-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 
 .board-header {
