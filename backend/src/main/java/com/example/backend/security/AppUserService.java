@@ -89,4 +89,22 @@ public class AppUserService {
         }
 
     }
+
+    public void delete(String id) {
+        appUserRepository.deleteById(id);
+    }
+
+    public AppUser confirmUser(String id) {
+        AppUser appUser = appUserRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("User with id : " + id + " does not exist.")
+        );
+
+        return appUserRepository.save(
+                AppUser.builder()
+                        .id(appUser.id())
+                        .username(appUser.username())
+                        .password(appUser.password())
+                        .role(appUser.role())
+                        .confirmed(true).build());
+    }
 }

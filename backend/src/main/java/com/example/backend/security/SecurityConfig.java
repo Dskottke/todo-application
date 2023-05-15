@@ -35,6 +35,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/user/*").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/user/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/user/confirm/list").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/user/*").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/user/confirm/*").hasRole("ADMIN")
                 .requestMatchers("/api/todo/**").authenticated()
                 .requestMatchers("/api/user/logout").authenticated()
                 .and()

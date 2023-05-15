@@ -12,4 +12,5 @@ public interface AppUserRepository extends MongoRepository<AppUser, String> {
 
     @Query(value = "{'confirmed': false}", fields = "{'id' : 1, 'username' : 1, 'role' : 1, 'confirmed' : 1}")
     List<AppUser> getAllUsersByConfirmedIsFalse();
+
 }

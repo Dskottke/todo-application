@@ -35,6 +35,25 @@ export const useUnconfirmedUsersFetch = () => {
     return {data, isLoading, isError, isSuccess}
 }
 
+export const useDeleteUser = () => {
+    const queryClient = useQueryClient()
+    const {mutate: deleteUser} = useMutation({
+        mutationFn: (id) => fetch.customUserFetch.delete(`/${id}`), onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['unconfirmedUsers']})
+        }
+    })
+    return {mutate: deleteUser}
+}
+export const useConfirmUser = () => {
+    const queryClient = useQueryClient()
+    const {mutate: confirmUser} = useMutation({
+        mutationFn: (id) => fetch.customUserFetch.put(`/confirm/${id}`), onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['unconfirmedUsers']})
+        }
+    })
+    return {mutate: confirmUser}
+}
+
 export const useAddToDo = () => {
     const queryClient = useQueryClient()
     const {mutate: createTask, isLoading} = useMutation({
@@ -69,6 +88,7 @@ export const useDeleteToDo = () => {
     })
     return {mutate: deleteToDo}
 }
+
 export const useDateFormatter = (creationDate, dueDate) => {
     const creationDateFormatted = useMemo(() => {
         return new Date(creationDate).toLocaleDateString("de-DE", {
