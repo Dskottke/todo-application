@@ -35,7 +35,7 @@ class AppUserIntegrationTest {
     void meAndExpectMockUserUsernameUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/me"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("user"));
+                .andExpect(content().string("{\"id\":null,\"username\":\"user\",\"password\":null,\"role\":\"USER\",\"confirmed\":true}"));
     }
 
     @Test
