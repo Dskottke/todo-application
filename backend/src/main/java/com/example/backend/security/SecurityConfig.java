@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/user/confirm/*").hasRole("ADMIN")
                 .requestMatchers("/api/todo/**").authenticated()
                 .requestMatchers("/api/user/logout").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
