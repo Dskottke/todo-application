@@ -21,7 +21,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: frontend-build
-          path: frontend/build/
+          path: frontend/dist/
 
   build-backend:
     runs-on: ubuntu-20.04
