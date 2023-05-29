@@ -15,7 +15,7 @@ function App() {
 
     return (
         <section className="App">
-            {location.pathname !== '/login' && <Navbar/>}
+            {location.pathname !== '/login' && location.pathname !== '/signup' && <Navbar/>}
             <Routes>
                 <Route path={"/"} element={<MainPage/>}/>
                 <Route path={"/login"} element={
