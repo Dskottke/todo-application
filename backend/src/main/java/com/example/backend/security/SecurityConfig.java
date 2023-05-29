@@ -8,16 +8,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.List;
 import java.util.Optional;
-
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -68,7 +71,8 @@ public class SecurityConfig {
             }
 
             AppUser appUser = user.get();
-
+            GrantedAuthority authority = () -> appUser.role().toString();
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(appUser, null, List.of(authority)));
             return User.builder().username(appUser.username()).password(appUser.password()).roles(appUser.role().toString()).build();
         };
 
