@@ -36,7 +36,8 @@ const AppContext = ({children}) => {
     const fetchUser = (credentials) => {
         fetch.customUserFetch.get("/", {
             auth: {
-                username: credentials.username, password: credentials.password
+                username: credentials.username,
+                password: credentials.password
             }
         })
             .then((response) => {

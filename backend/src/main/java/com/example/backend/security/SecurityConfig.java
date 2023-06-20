@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,25 +30,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf()
-                .disable()
-                .httpBasic()
-                .authenticationEntryPoint(authenticationEntryPoint())
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/api/user/*").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/user/*").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/user/confirm/list").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/user/*").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/user/confirm/*").hasRole("ADMIN")
-                .requestMatchers("/api/todo/**").authenticated()
-                .requestMatchers("/api/user/logout").authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                .and()
-                .logout().logoutUrl("/api/user/logout").logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpStatus.OK.value()))
-                .and()
+                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(basic -> authenticationEntryPoint())
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(HttpMethod.GET, "/api/user/*").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/api/user/*").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/api/user/confirm/list").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.DELETE, "/api/user/*").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.PUT, "/api/user/confirm/*").hasRole("ADMIN");
+                    auth.requestMatchers("/api/todo/**").authenticated();
+                    auth.requestMatchers("/api/user/logout").authenticated();
+                    auth.anyRequest().permitAll();
+                })
+                .sessionManagement(httpSecuritySessionManagementConfigurer ->
+                        httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .logout(logout -> logout
+                        .logoutUrl("api/user/logout")
+                        .logoutSuccessHandler(((request, response, authentication) -> response.setStatus(HttpStatus.OK.value()))))
                 .build();
 
     }
